@@ -10,9 +10,13 @@
 		
 		String location = request.getParameter("location");
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		session.setAttribute("location",location);
+		//session.setAttribute("location",location);
 		
+		HashMap<String,String> degreeInfo = new HashMap<String,String>();
 		
+		degreeInfo.put("location",location);
+		
+		session.setAttribute("degreeInfo",degreeInfo);
 	%>
 	
 	Get rid of this later.
