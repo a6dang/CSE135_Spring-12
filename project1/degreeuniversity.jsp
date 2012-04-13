@@ -7,11 +7,31 @@
 		String location = request.getParameter("location");
 		int idx = Integer.parseInt(request.getParameter("idx"));
 		
-		HashMap<String,String> degreeInfo = new HashMap<String,String>();
+		Integer ctr = (Integer) session.getAttribute("ctr"); 
+		%>
+		<%= ctr %>
+		<%
+		if( ctr == null){
+			ctr = 0;
+		}
+		else{
+			ctr++;	
+		}
 		
-		degreeInfo.put("location",location);
+		session.setAttribute("ctr",ctr);
+		ArrayList<HashMap<String,String>> degrees = (ArrayList<HashMap<String,String>>) session.getAttribute("degrees");
+
+		if(degrees == null){
+			degrees = new ArrayList<HashMap<String,String>>();
+		}
 		
-		session.setAttribute("degreeInfo",degreeInfo);
+		if(degrees.size() == ctr){
+			degrees.add(new HashMap<String,String>());
+		}
+		
+		degrees.get(ctr).put("location",location);
+		
+		session.setAttribute("degrees",degrees);
 	%>
 </title>
 

@@ -4,9 +4,14 @@
 	More Degrees
 	<%
 		String major = request.getParameter("major");
- 
-		HashMap<String,String> degreeInfo = (HashMap<String,String>) session.getAttribute("degreeInfo");
-		degreeInfo.put("major",major);
+		String gpa = request.getParameter("GPA");
+		String degreeLevel = request.getParameter("degreeLevel");
+		
+		int ctr = (Integer) session.getAttribute("ctr");
+		ArrayList<HashMap<String,String>> degrees = (ArrayList<HashMap<String,String>>) session.getAttribute("degrees");
+		degrees.get(ctr).put("major",major);
+		degrees.get(ctr).put("gpa",gpa);
+		degrees.get(ctr).put("degreeLevel",degreeLevel);
 	%>
 </title>
 
@@ -14,7 +19,7 @@
 	
 	Is this the last degree?
 	
-	<form action="degreediscipline.jsp" method="POST">
+	<form action="degreelocation.jsp" method="POST">
 		<input type="submit" value="Submit Next Degree" />
 	</form>
 	

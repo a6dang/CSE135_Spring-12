@@ -5,9 +5,10 @@
 	<%	
 		String university = request.getParameter("university");
  
-		HashMap<String,String> degreeInfo = (HashMap<String,String>) session.getAttribute("degreeInfo");
-		degreeInfo.put("university",university);
+		int ctr = (Integer) session.getAttribute("ctr");
+		ArrayList<HashMap<String,String>> degrees = (ArrayList<HashMap<String,String>>) session.getAttribute("degrees");
 		
+		degrees.get(ctr).put("university",university);		
 	%>
 </title>
 
@@ -29,12 +30,24 @@
 		<%
 			}
 		%>
-		
+		<br />
+		GPA: <input type="text" name="GPA" />
+		<select name="degLevel">
+			<option value="degreeLevel">B.S.</option>
+			<option value="degreeLevel">M.S.</option>
+			<option value="degreeLevel">P.H.D</option>
+		</select>
 		<input type="submit" value="Submit" />
 	</form>
 	
 	<form action="moredegrees.jsp" method="POST">
-		Other discipline: <input type="text" name="major" />	
+		Other discipline: <input type="text" name="major" />
+		GPA: <input type="text" name="GPA" />
+		<select name="degLevel">
+			<option value="degreeLevel">B.S.</option>
+			<option value="degreeLevel">M.S.</option>
+			<option value="degreeLevel">P.H.D</option>
+		</select>
 		<input type="submit" value="Submit" />
 	</form>
                

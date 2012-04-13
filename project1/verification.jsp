@@ -6,9 +6,12 @@
 	<%
 		Student theStudent = (Student) session.getAttribute("theStudent");
 		
+		int ctr = (Integer) session.getAttribute("ctr");
+		
 		String specialization = request.getParameter("specialization");
-		HashMap<String,String> degreeInfo = (HashMap<String,String>) session.getAttribute("degreeInfo");
-		degreeInfo.put("specialization",specialization);	
+		ArrayList<HashMap<String,String>> degrees = (ArrayList<HashMap<String,String>>) session.getAttribute("degrees");
+		//<!-- only one specialization per student should be a field in the student class instead -->
+		degrees.get(ctr).put("specialization",specialization);
 	%>
 </title>
 
@@ -41,11 +44,27 @@
 	<b>Area Code:</b> <%= theStudent.getAreaCode() %>
 	<br />
 	<b>Phone Number:</b> <%= theStudent.getPhoneNumber() %>
-	<br />
-	
-	Need to do degree info
-	<br />
-	
+	<br /><br />
+
+	<% for(int i=0; i<=ctr; i++){
+			HashMap<String,String> curDegree = degrees.get(i);
+	%>
+		<br />
+		<b>Degree <%=i+1%></b>
+		<br />
+		<b>University:</b> <%=curDegree.get("university")%>
+		<br />
+		<b>Location:</b> <%=curDegree.get("location")%>
+		<br />
+		<b>Discipline:</b> <%=curDegree.get("major")%>
+		<br />
+		<b>GPA:</b> <%=curDegree.get("gpa")%>
+		<br />
+		<b>Degree Level:</b> <%=curDegree.get("degreeLevel")%>
+		<br /><br />
+	<% 
+		} 
+	%>
 	<form action="" method="POST" >
 		<input type="submit" value="Submit" />
 		<input type="submit" value="Cancel" />
