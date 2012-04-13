@@ -1,42 +1,24 @@
-<%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
-
-<body>
-	
+<title>
+	More Degrees
 	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
-		
 		String major = request.getParameter("major");
  
 		HashMap<String,String> degreeInfo = (HashMap<String,String>) session.getAttribute("degreeInfo");
 		degreeInfo.put("major",major);
-		
 	%>
+</title>
+
+<body>
 	
-	Get rid of this later.
-	First name: <%= firstName %>
-	<br />    
-	Middle initial: <%= middleInitial %>
-	<br />    
-	Last name: <%= lastName %>
-	<br />  
-	
-	DO YOU HAVE ANY MORE DEGREES?
+	Is this the last degree?
 	
 	<form action="degreediscipline.jsp" method="POST">
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />
-		<input type="submit" value="Submit next degree" />
+		<input type="submit" value="Submit Next Degree" />
 	</form>
 	
 	<form action="specializations.jsp" method="POST">
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />
 		<input type="submit" value="Done" />
 	</form>
 </body>

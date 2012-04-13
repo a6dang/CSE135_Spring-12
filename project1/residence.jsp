@@ -1,32 +1,31 @@
- <%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
 <title>
-	Country of residence
-</title>
-<body>
+	Country of Residence
+	
 	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
 		String citizenship = request.getParameter("citizenship");
 		
-		session.setAttribute("citizenship",citizenship);
+		Student theStudent = (Student) session.getAttribute("theStudent");
+		theStudent.setCitizenship(citizenship);
 	%>
-	
-	First name: <%= firstName %>
+</title>
+
+<body>
+	First name: <%= theStudent.getFName() %>
 	<br />    
-	Middle initial: <%= middleInitial %>
+	Middle initial: <%= theStudent.getMidInitial() %>
 	<br />    
-	Last name: <%= lastName %>
+	Last name: <%= theStudent.getLName() %>
 	<br />  
-	Country of citizenship: <%= citizenship %>
+	Country of citizenship: <%= theStudent.getCitizenship() %>
 	<br />  
 	
 	WHERE DO YOU LIVE?
 	
 	<br />
 	
-	<a href="address.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&residence=<%= citizenship %>">Same country as citizenship</a>
+	<a href="address.jsp?residence=<%= theStudent.getCitizenship() %>">Same country as citizenship</a>
 
 	<table>
 		<tr>
@@ -39,7 +38,7 @@
 				for (int i = 0; i < countries.size()/3; i++){
 					nextCountry = (String) countries.elementAt(i);
 			%>
-				<a href="address.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&residence=<%= nextCountry %>"><%= nextCountry %></a>
+				<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
 				<br />
 				
 			<%
@@ -51,7 +50,7 @@
 				for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 					nextCountry = (String) countries.elementAt(i);
 			%>
-				<a href="address.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&residence=<%= nextCountry %>"><%= nextCountry %></a>
+				<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
 				<br />
 				
 			<%
@@ -63,7 +62,7 @@
 				for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 					nextCountry = (String) countries.elementAt(i);
 			%>
-				<a href="address.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&residence=<%= nextCountry %>"><%= nextCountry %></a>
+				<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
 				<br />
 				
 			<%

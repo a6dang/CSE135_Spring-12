@@ -1,27 +1,20 @@
-<%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
-
-<body>
-	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
-		
+<title>
+	Providing Degrees - Choose Discipline
+	<%	
 		String university = request.getParameter("university");
  
 		HashMap<String,String> degreeInfo = (HashMap<String,String>) session.getAttribute("degreeInfo");
 		degreeInfo.put("university",university);
 		
 	%>
+</title>
+
+<body>
 	
-	Get rid of this later.
-	First name: <%= firstName %>
-	<br />    
-	Middle initial: <%= middleInitial %>
-	<br />    
-	Last name: <%= lastName %>
-	<br />  
+	Choose a displicine below or enter one if yours is not listed:
+	<br />
 	
 	<form action="moredegrees.jsp" method="POST">
 		<%
@@ -36,18 +29,12 @@
 		<%
 			}
 		%>
-			
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />
+		
 		<input type="submit" value="Submit" />
 	</form>
 	
 	<form action="moredegrees.jsp" method="POST">
-		University: <input type="text" name="university" />	
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />
+		Other discipline: <input type="text" name="university" />	
 		<input type="submit" value="Submit" />
 	</form>
                

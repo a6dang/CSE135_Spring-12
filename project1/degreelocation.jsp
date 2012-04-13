@@ -1,19 +1,16 @@
- <%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
-
-<body>
+<title>
+	Providing Degrees - Choose Locations
 	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
+		Student theStudent = (Student) session.getAttribute("theStudent");
 		
-		if ( ((String) session.getAttribute("residence")).equals("United States")){
+		if ( theStudent.getResidence().equals("United States")){
 			String state = request.getParameter("state");
-			session.setAttribute("state",state);
+			theStudent.setState(state);
 		} else {
 			String telcode = request.getParameter("telcode");
-			session.setAttribute("telcode",telcode);
+			theStudent.setTelephoneCode(telcode);
 		}
 		String staddress = request.getParameter("staddress");
 		String city = request.getParameter("city");
@@ -21,21 +18,19 @@
 		String area = request.getParameter("area");
 		String phone = request.getParameter("phone");
 
-		session.setAttribute("staddress",staddress);
-		session.setAttribute("city",city);
-		session.setAttribute("zip",zip);
-		session.setAttribute("area",area);
-		session.setAttribute("phone",phone);
+		theStudent.setStAddress(staddress);
+		theStudent.setCity(city);
+		theStudent.setZipCode(zip);
+		theStudent.setAreaCode(area);
+		theStudent.setPhoneNumber(phone);
 	%>
-	
-	Get rid of this later.
-	First name: <%= firstName %>
-	<br />    
-	Middle initial: <%= middleInitial %>
-	<br />    
-	Last name: <%= lastName %>
-	<br />  
+</title>
 
+<body>
+	
+	Choose the country or U.S. state where you attained your degree:
+	<br />
+	
 	<table>
 		<tr>
 			<td>
@@ -47,9 +42,8 @@
 				for (int i = 0; i < universities.size()/3; i++){
 					nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
 			%>
-					<a href="degreeuniversity.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+					<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
 					<br />
-				
 			<%
 				}
 			%>
@@ -59,9 +53,8 @@
 				for (int i = universities.size()/3; i < (universities.size()*2)/3; i++){
 					nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
 			%>
-					<a href="degreeuniversity.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
-					<br />
-				
+					<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+					<br />		
 			<%
 				}
 			%>	
@@ -71,9 +64,8 @@
 				for (int i = (universities.size()*2)/3; i < universities.size(); i++){
 					nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
 			%>
-					<a href="degreeuniversity.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+					<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
 					<br />
-				
 			<%
 				}
 			%>	

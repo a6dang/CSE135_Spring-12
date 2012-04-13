@@ -1,28 +1,27 @@
- <%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
-
-<body>
+<title>
+	Address
 	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
 		String residence = request.getParameter("residence");
 		
-		String citizenship = (String) session.getAttribute("citizenship");
-		session.setAttribute("residence",residence);
-		
+		Student theStudent = (Student) session.getAttribute("theStudent");
+		theStudent.setResidence(residence);
 	%>
+</title>
+
+<body>
+
 	
-	First name: <%= firstName %>
+	First name: <%= theStudent.getFName() %>
 	<br />    
-	Middle initial: <%= middleInitial %>
+	Middle initial: <%= theStudent.getMidInitial() %>
 	<br />    
-	Last name: <%= lastName %>
+	Last name: <%= theStudent.getLName() %>
 	<br />  
-	Country of citizenship: <%= citizenship %>
+	Country of citizenship: <%= theStudent.getCitizenship() %>
 	<br />  
-	Country of residence: <%= residence %>
+	Country of residence: <%= theStudent.getResidence() %>
 	<br /> 
 	<br />
 	<form action="degreelocation.jsp" method="POST">
@@ -31,7 +30,7 @@
 		City: <input type="text" name="city" size="15"/>
 		<br />
 		<%
-			if (residence.equals("United States")){
+			if (theStudent.getResidence().equals("United States")){
 		%>
 			State: <input type="text" name="state" size="15"/>
 		<%
@@ -47,10 +46,7 @@
 		Area Code: <input type="text" name="area" size="4"/>
 		<br />
 		Phone Number: <input type="text" name="phone" size="15"/>
-		<br />
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />		
+		<br />	
 		<input type="submit" value="Submit" />
 	</form>
 	  

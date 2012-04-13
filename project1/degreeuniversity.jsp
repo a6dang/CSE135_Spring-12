@@ -1,16 +1,11 @@
- <%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
-
-<body>
-	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
-		
+<title>
+	Provide Degrees - Choose University
+	<%	
+		Student theStudent = (Student) session.getAttribute("theStudent");
 		String location = request.getParameter("location");
 		int idx = Integer.parseInt(request.getParameter("idx"));
-		//session.setAttribute("location",location);
 		
 		HashMap<String,String> degreeInfo = new HashMap<String,String>();
 		
@@ -18,17 +13,13 @@
 		
 		session.setAttribute("degreeInfo",degreeInfo);
 	%>
-	
-	Get rid of this later.
-	First name: <%= firstName %>
-	<br />    
-	Middle initial: <%= middleInitial %>
-	<br />    
-	Last name: <%= lastName %>
-	<br />  
-	
-	
+</title>
 
+<body>
+	
+	Select the university that you attended or enter one if the one you attended is not present:
+	<br />
+	
 	<table>
 		<tr>
 			<td>
@@ -41,10 +32,8 @@
 				for (int i = 0; i < listUnis.size()/3; i++){
 					nextUniversity = (String) listUnis.elementAt(i);
 			%>
-				<a href="degreediscipline.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&university=<%= nextUniversity %>"><%= nextUniversity %></a>
-				<br />
-				
-				
+				<a href="degreediscipline.jsp?university=<%= nextUniversity %>"><%= nextUniversity %></a>
+				<br />	
 			<%
 				}
 			%>
@@ -55,9 +44,8 @@
 				for (int i = listUnis.size()/3; i < (listUnis.size()*2)/3; i++){
 					nextUniversity = (String) listUnis.elementAt(i);
 			%>
-				<a href="degreediscipline.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&university=<%= nextUniversity %>"><%= nextUniversity %></a>
+				<a href="degreediscipline.jsp?university=<%= nextUniversity %>"><%= nextUniversity %></a>
 				<br />
-				
 			<%
 				}
 			%>	
@@ -67,21 +55,18 @@
 				for (int i = (listUnis.size()*2)/3; i < listUnis.size(); i++){
 					nextUniversity = (String) listUnis.elementAt(i);
 			%>
-				<a href="degreediscipline.jsp?first=<%= firstName %>&middle=<%= middleInitial %>&last=<%= lastName %>&university=<%= nextUniversity %>"><%= nextUniversity %></a>
+				<a href="degreediscipline.jsp?university=<%= nextUniversity %>"><%= nextUniversity %></a>
 				<br />
-				
 			<%
 				}
 			%>	
 			</td>
 		</tr>
 	</table>
-
+	<br />
+	
 	<form action="degreediscipline.jsp" method="POST">
-		University: <input type="text" name="university" />
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />		
+		Other University: <input type="text" name="university" />	
 		<input type="submit" value="Submit" />
 	</form>
                

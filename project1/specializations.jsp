@@ -1,22 +1,13 @@
-<%@page import="support.*, java.util.*" %>
+<%@page import=" Student.*, support.*, java.util.*" %>
 <html>
-
+<title>
+	Specialization
+</title>
 
 <body>
 	
-	<%
-		String firstName = request.getParameter("first");
-		String middleInitial = request.getParameter("middle");
-		String lastName = request.getParameter("last");
-	%>
-	
-	Get rid of this later.
-	First name: <%= firstName %>
-	<br />    
-	Middle initial: <%= middleInitial %>
-	<br />    
-	Last name: <%= lastName %>
-	<br />  
+	Please choose a specialization from the dropdown menu:
+	<br />
 	
 	<form action="verification.jsp" method="POST" >
 		<select name="specialization">
@@ -33,9 +24,6 @@
 			}
 		%>
 		</select>
-		<input type="hidden" name="first" value="<%= firstName %>" />
-		<input type="hidden" name="middle" value="<%= middleInitial %>" />
-		<input type="hidden" name="last" value="<%= lastName %>" />
 		<input type="submit" value="Submit" />
 	</form>
 </body>
