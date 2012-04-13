@@ -34,7 +34,7 @@
 	</form>
 	
 	<form action="moredegrees.jsp" method="POST">
-		Other discipline: <input type="text" name="university" />	
+		Other discipline: <input type="text" name="major" />	
 		<input type="submit" value="Submit" />
 	</form>
                
