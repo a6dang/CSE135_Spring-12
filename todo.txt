@@ -1,0 +1,12 @@
+Hey. I think this is another convenient way to pass todos to the other person.
+If you're finished with a todo, you can just delete it off the list, and if
+there's a new one you can just add it here and then when the person checks out
+they just need to look at this file to see what's happening.
+
+TODO:
+-fix the null value for degree level on degreediscipline.jsp
+	-i'm pretty sure it's because i named all the options the same value and
+	on the moredegrees.jsp page the processing of it doesn't work out too
+	well. so when i print out the thing on verification.jsp it's null.
+	not sure if you know what to do.
+
