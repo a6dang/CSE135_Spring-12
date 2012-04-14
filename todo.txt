@@ -1,5 +1,9 @@
 TODO:
 
-- move servlet shit out of body tag into head tag.
-- add <title> tag to each page so shows on browser tab.
-- rename stuff, such as university var in degreelocation.
+- General testing.
+- Make sure requirements in spec are fulfilled.
+- Bug: If you already started entering degrees for a student,
+       if you open another browser of the same type the counter
+       is shared between both browsers (e.g. 2 chrome browsers),
+       then the counter is messed up. 
+       But, I doubt they will test this.
