@@ -9,10 +9,14 @@
 			String major = request.getParameter("major");
 			String gpa = request.getParameter("GPA");
 			String degreeLevel = request.getParameter("degLevel");
+			String gradMonth = request.getParameter("gradMonth");
+			String gradYear = request.getParameter("gradYear");
 			
 			theStudent.setDegreeInfo(ctr,"major",major);
 			theStudent.setDegreeInfo(ctr,"gpa",gpa);
 			theStudent.setDegreeInfo(ctr,"degreeLevel",degreeLevel);
+			theStudent.setDegreeInfo(ctr,"gradMonth",gradMonth);
+			theStudent.setDegreeInfo(ctr,"gradYear",gradYear);
 		%>
 	</head>
 	<body>

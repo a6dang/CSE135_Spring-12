@@ -57,6 +57,8 @@
 			<b>GPA:</b> <%=theStudent.getDegreeInfo(i,"gpa")%>
 			<br />
 			<b>Degree Level:</b> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
+			<br />
+			<b>Graduation Date:</b> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <%=theStudent.getDegreeInfo(i,"gradYear")%>
 			<br /><br />
 		<% 
 			} 

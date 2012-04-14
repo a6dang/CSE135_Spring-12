@@ -30,6 +30,11 @@
 				}
 			%>
 			<br />
+			Other discipline: <input type="text" name="major" />
+			<br />
+			Graduation date: <input type="text" name="gradMonth" value="month" /> 
+			<input type="text" name="gradYear" value="year" />
+			<br />
 			GPA: <input type="text" name="GPA" />
 			<select name="degLevel">
 				<option value="B.S.">B.S.</option>
@@ -39,7 +44,7 @@
 			<input type="submit" value="Submit" />
 		</form>
 
-		<!-- Other discipline not listed. -->
+		<!-- Other discipline not listed. 
 		<form action="moredegrees.jsp" method="POST">
 			Other discipline: <input type="text" name="major" />
 			GPA: <input type="text" name="GPA" />
@@ -49,6 +54,7 @@
 				<option value="P.H.D.">P.H.D</option>
 			</select>
 			<input type="submit" value="Submit" />
-		</form>	   
+		</form>
+		-->
 	</body>
 </html>
