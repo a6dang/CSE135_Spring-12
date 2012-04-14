@@ -33,9 +33,9 @@
 		<br />
 		GPA: <input type="text" name="GPA" />
 		<select name="degLevel">
-			<option value="degreeLevel">B.S.</option>
-			<option value="degreeLevel">M.S.</option>
-			<option value="degreeLevel">P.H.D</option>
+			<option value="B.S.">B.S.</option>
+			<option value="M.S.">M.S.</option>
+			<option value="P.H.D">P.H.D</option>
 		</select>
 		<input type="submit" value="Submit" />
 	</form>
@@ -44,9 +44,9 @@
 		Other discipline: <input type="text" name="major" />
 		GPA: <input type="text" name="GPA" />
 		<select name="degLevel">
-			<option value="degreeLevel">B.S.</option>
-			<option value="degreeLevel">M.S.</option>
-			<option value="degreeLevel">P.H.D</option>
+			<option value="B.S.">B.S.</option>
+			<option value="M.S.">M.S.</option>
+			<option value="P.H.D.">P.H.D</option>
 		</select>
 		<input type="submit" value="Submit" />
 	</form>

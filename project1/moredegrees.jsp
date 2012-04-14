@@ -5,7 +5,7 @@
 	<%
 		String major = request.getParameter("major");
 		String gpa = request.getParameter("GPA");
-		String degreeLevel = request.getParameter("degreeLevel");
+		String degreeLevel = request.getParameter("degLevel");
 		
 		int ctr = (Integer) session.getAttribute("ctr");
 		ArrayList<HashMap<String,String>> degrees = (ArrayList<HashMap<String,String>>) session.getAttribute("degrees");
