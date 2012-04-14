@@ -1,4 +1,8 @@
 package Student;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Student class to store applicant information
  */
@@ -23,6 +27,12 @@ public class Student{
 	private String telephoneCode;
 	private String phoneNumber;
 	
+	//degree information
+	private ArrayList<HashMap<String, String>> listOfDegrees;
+	
+	//specialization
+	private String specialization;
+	
 	public Student(){
 		fName = "";
 		midInitial = "";
@@ -38,6 +48,10 @@ public class Student{
 		areaCode = "";
 		telephoneCode = "";
 		phoneNumber = "";
+		
+		specialization = "";
+		
+		listOfDegrees = new ArrayList<HashMap<String, String>>();
 	}
 	
 	public void setFName(String newFName){
@@ -133,5 +147,30 @@ public class Student{
 	
 	public String getPhoneNumber(){
 		return this.phoneNumber;
+	}
+	
+	public Integer numOfDegrees(){
+		return this.listOfDegrees.size();
+	}
+	
+	public void insertNewDegree(){
+		this.listOfDegrees.add(new HashMap<String,String>());
+	}
+	
+	public void setDegreeInfo(Integer whichDegree, String key, String value){
+		// Add or update a key-value pair in the specified degree.
+		this.listOfDegrees.get(whichDegree).put(key, value);
+	}
+	
+	public String getDegreeInfo(Integer whichDegree, String key){
+		return this.listOfDegrees.get(whichDegree).get(key);
+	}
+	
+	public void setSpecialization(String newSpecialization){
+		this.specialization = newSpecialization;
+	}
+	
+	public String getSpecialization(){
+		return this.specialization;
 	}
 }
