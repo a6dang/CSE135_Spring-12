@@ -4,9 +4,9 @@
 		<title>Provide Degrees - Choose Locations</title>
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			
-			if(session.getAttribute("ctr")== null){
-			
+			int numDegrees = theStudent.numOfDegrees();
+
+			if(numDegrees == 0){
 				if ( theStudent.getResidence().equals("United States")){
 					String state = request.getParameter("state");
 					theStudent.setState(state);
@@ -111,25 +111,24 @@
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
 		
-		<% 
-		if(session.getAttribute("ctr")!= null){
-			int ctr = (Integer) session.getAttribute("ctr");
-			for(int i=0; i<=ctr; i++){
+		<% 	
+		if(numDegrees > 0){
+			for(int i=0; i< numDegrees; i++){
 		%>
 			<br />
 			<b>Degree <%=i+1%></b>
 			<br />
-			<b>University:</b> <%=theStudent.getDegreeInfo(i,"university")%>
+			<b>University:</b> <% if(theStudent.getDegreeInfo(i,"university") != null) %> <%=theStudent.getDegreeInfo(i,"university")%>
 			<br />
-			<b>Location:</b> <%=theStudent.getDegreeInfo(i,"location")%>
+			<b>Location:</b> <% if(theStudent.getDegreeInfo(i,"location") != null) %> <%=theStudent.getDegreeInfo(i,"location")%>
 			<br />
-			<b>Discipline:</b> <%=theStudent.getDegreeInfo(i,"major")%>
+			<b>Discipline:</b> <% if(theStudent.getDegreeInfo(i,"major") != null) %> <%=theStudent.getDegreeInfo(i,"major")%>
 			<br />
-			<b>GPA:</b> <%=theStudent.getDegreeInfo(i,"gpa")%>
+			<b>GPA:</b> <% if(theStudent.getDegreeInfo(i,"gpa") != null) %> <%=theStudent.getDegreeInfo(i,"gpa")%>
 			<br />
-			<b>Degree Level:</b> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
+			<b>Degree Level:</b> <% if(theStudent.getDegreeInfo(i,"degreeLevel") != null) %> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
 			<br />
-			<b>Graduation Date:</b> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <%=theStudent.getDegreeInfo(i,"gradYear")%>
+			<b>Graduation Date:</b> <% if(theStudent.getDegreeInfo(i,"gradMonth") != null) %> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <% if(theStudent.getDegreeInfo(i,"gradYear") != null) %> <%=theStudent.getDegreeInfo(i,"gradYear")%>
 			<br /><br />
 		<% 
 			} 

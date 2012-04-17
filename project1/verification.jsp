@@ -4,8 +4,7 @@
 		<title>Verification</title>
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			
-			int ctr = (Integer) session.getAttribute("ctr");
+			int numDegrees = theStudent.numOfDegrees();
 			
 			String specialization = request.getParameter("specialization");
 			theStudent.setSpecialization(specialization);
@@ -43,7 +42,7 @@
 		<br /><br />
 		
 		<% 
-			for(int i=0; i<=ctr; i++){
+			for(int i=0; i<numDegrees; i++){
 		%>
 			<br />
 			<b>Degree <%=i+1%></b>

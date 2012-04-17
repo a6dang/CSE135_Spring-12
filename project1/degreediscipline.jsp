@@ -5,10 +5,9 @@
 		<%	
 			String university = request.getParameter("university");
 	 
-			int ctr = (Integer) session.getAttribute("ctr");
-
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			theStudent.setDegreeInfo(ctr,"university",university);
+			int numDegrees = theStudent.numOfDegrees();
+			theStudent.setDegreeInfo(numDegrees-1,"university",university);
 		%>
 	</head>
 	<body>
@@ -32,10 +31,10 @@
 			<br />
 			Other discipline: <input type="text" name="major" />
 			<br />
-			Graduation date: <input type="text" name="gradMonth" value="month" /> 
-			<input type="text" name="gradYear" value="year" />
+			Graduation date: <input type="text" name="gradMonth" value="month" size="10" /> 
+			<input type="text" name="gradYear" value="year" size="4" />
 			<br />
-			GPA: <input type="text" name="GPA" />
+			GPA: <input type="text" name="GPA" size="5" />
 			<select name="degLevel">
 				<option value="B.S.">B.S.</option>
 				<option value="M.S.">M.S.</option>
@@ -78,38 +77,26 @@
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
 		<% 
-			for(int i=0; i<=ctr; i++){
+			for(int i=0; i < numDegrees; i++){
 		%>
 			<br />
 			<b>Degree <%=i+1%></b>
 			<br />
-			<b>University:</b> <%=theStudent.getDegreeInfo(i,"university")%>
+			<b>University:</b> <% if(theStudent.getDegreeInfo(i,"university") != null){ %> <%=theStudent.getDegreeInfo(i,"university")%> <% } %>
 			<br />
-			<b>Location:</b> <%=theStudent.getDegreeInfo(i,"location")%>
+			<b>Location:</b> <% if(theStudent.getDegreeInfo(i,"location") != null){ %> <%=theStudent.getDegreeInfo(i,"location")%> <% } %>
 			<br />
-			<b>Discipline:</b> <%=theStudent.getDegreeInfo(i,"major")%>
+			<b>Discipline:</b> <% if(theStudent.getDegreeInfo(i,"major") != null){ %> <%=theStudent.getDegreeInfo(i,"major")%> <% } %>
 			<br />
-			<b>GPA:</b> <%=theStudent.getDegreeInfo(i,"gpa")%>
+			<b>GPA:</b> <% if(theStudent.getDegreeInfo(i,"gpa") != null){ %> <%=theStudent.getDegreeInfo(i,"gpa")%> <% } %>
 			<br />
-			<b>Degree Level:</b> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
+			<b>Degree Level:</b> <% if(theStudent.getDegreeInfo(i,"degreeLevel") != null){ %> <%=theStudent.getDegreeInfo(i,"degreeLevel")%> <% } %>
 			<br />
-			<b>Graduation Date:</b> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <%=theStudent.getDegreeInfo(i,"gradYear")%>
+			<b>Graduation Date:</b> <% if(theStudent.getDegreeInfo(i,"gradMonth") != null){ %> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <% } %> <% if(theStudent.getDegreeInfo(i,"gradYear") != null){ %> <%=theStudent.getDegreeInfo(i,"gradYear")%> <% } %>
 			<br /><br />
 		<% 
 			} 
 		%>
 		<br />
-		<!-- Other discipline not listed. 
-		<form action="moredegrees.jsp" method="POST">
-			Other discipline: <input type="text" name="major" />
-			GPA: <input type="text" name="GPA" />
-			<select name="degLevel">
-				<option value="B.S.">B.S.</option>
-				<option value="M.S.">M.S.</option>
-				<option value="P.H.D.">P.H.D</option>
-			</select>
-			<input type="submit" value="Submit" />
-		</form>
-		-->
 	</body>
 </html>

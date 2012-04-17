@@ -4,8 +4,7 @@
 		<title>Specialization</title>
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			
-			int ctr = (Integer) session.getAttribute("ctr");
+			int numDegrees = theStudent.numOfDegrees();
 		%>
 	</head>
 	<body>
@@ -65,7 +64,7 @@
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
 		<% 
-			for(int i=0; i<=ctr; i++){
+			for(int i=0; i<numDegrees; i++){
 		%>
 			<br />
 			<b>Degree <%=i+1%></b>

@@ -4,7 +4,7 @@
 		<title>More Degrees</title>
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			int ctr = (Integer) session.getAttribute("ctr");
+			int numDegrees = theStudent.numOfDegrees();
 			
 			String major = request.getParameter("major");
 			String gpa = request.getParameter("GPA");
@@ -12,11 +12,11 @@
 			String gradMonth = request.getParameter("gradMonth");
 			String gradYear = request.getParameter("gradYear");
 			
-			theStudent.setDegreeInfo(ctr,"major",major);
-			theStudent.setDegreeInfo(ctr,"gpa",gpa);
-			theStudent.setDegreeInfo(ctr,"degreeLevel",degreeLevel);
-			theStudent.setDegreeInfo(ctr,"gradMonth",gradMonth);
-			theStudent.setDegreeInfo(ctr,"gradYear",gradYear);
+			theStudent.setDegreeInfo(numDegrees-1,"major",major);
+			theStudent.setDegreeInfo(numDegrees-1,"gpa",gpa);
+			theStudent.setDegreeInfo(numDegrees-1,"degreeLevel",degreeLevel);
+			theStudent.setDegreeInfo(numDegrees-1,"gradMonth",gradMonth);
+			theStudent.setDegreeInfo(numDegrees-1,"gradYear",gradYear);
 		%>
 	</head>
 	<body>
@@ -66,22 +66,22 @@
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
 		<% 
-			for(int i=0; i<=ctr; i++){
+			for(int i=0; i<numDegrees; i++){
 		%>
 			<br />
 			<b>Degree <%=i+1%></b>
 			<br />
-			<b>University:</b> <%=theStudent.getDegreeInfo(i,"university")%>
+			<b>University:</b> <% if(theStudent.getDegreeInfo(i,"university") != null){ %> <%=theStudent.getDegreeInfo(i,"university")%> <% } %>
 			<br />
-			<b>Location:</b> <%=theStudent.getDegreeInfo(i,"location")%>
+			<b>Location:</b> <% if(theStudent.getDegreeInfo(i,"location") != null){ %> <%=theStudent.getDegreeInfo(i,"location")%> <% } %>
 			<br />
-			<b>Discipline:</b> <%=theStudent.getDegreeInfo(i,"major")%>
+			<b>Discipline:</b> <% if(theStudent.getDegreeInfo(i,"major") != null){ %> <%=theStudent.getDegreeInfo(i,"major")%> <% } %>
 			<br />
-			<b>GPA:</b> <%=theStudent.getDegreeInfo(i,"gpa")%>
+			<b>GPA:</b> <% if(theStudent.getDegreeInfo(i,"gpa") != null){ %> <%=theStudent.getDegreeInfo(i,"gpa")%> <% } %>
 			<br />
-			<b>Degree Level:</b> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
+			<b>Degree Level:</b> <% if(theStudent.getDegreeInfo(i,"degreeLevel") != null){ %> <%=theStudent.getDegreeInfo(i,"degreeLevel")%> <% } %>
 			<br />
-			<b>Graduation Date:</b> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <%=theStudent.getDegreeInfo(i,"gradYear")%>
+			<b>Graduation Date:</b> <% if(theStudent.getDegreeInfo(i,"gradMonth") != null){ %> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <% } %> <% if(theStudent.getDegreeInfo(i,"gradYear") != null){ %> <%=theStudent.getDegreeInfo(i,"gradYear")%> <% } %>
 			<br /><br />
 		<% 
 			} 

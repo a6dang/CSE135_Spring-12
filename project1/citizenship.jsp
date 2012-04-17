@@ -15,6 +15,7 @@
 			session.setAttribute("theStudent",theStudent);
 		%>
 	</head>
+
 	<body>
 		<h3>Student Information:</h3>
 		<!-- Show information so far. -->
