@@ -20,9 +20,6 @@
 		<br />  
 		Country of citizenship: <%= theStudent.getCitizenship() %>
 		<br />  
-		
-		
-		
 		<br />
 		<h2>Country of Residence:</h2>
 		<a href="address.jsp?residence=<%= theStudent.getCitizenship() %>">Same country as citizenship</a>

@@ -10,19 +10,6 @@
 		%>
 	</head>
 	<body>
-		<h3>Student Information:</h3>
-		<!-- Show information so far. -->
-		First name: <%= theStudent.getFName() %>
-		<br />    
-		Middle initial: <%= theStudent.getMidInitial() %>
-		<br />    
-		Last name: <%= theStudent.getLName() %>
-		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
-		<br />  
-		Country of residence: <%= theStudent.getResidence() %>
-		<br /> 
-		<br />
 		<h2>Address:</h2>
 		<!-- Address form. -->
 		<form action="degreelocation.jsp" method="POST">
@@ -50,5 +37,18 @@
 			<br />	
 			<input type="submit" value="Submit" />
 		</form>
+		<h3>Student Information:</h3>
+		<!-- Show information so far. -->
+		First name: <%= theStudent.getFName() %>
+		<br />    
+		Middle initial: <%= theStudent.getMidInitial() %>
+		<br />    
+		Last name: <%= theStudent.getLName() %>
+		<br />  
+		Country of citizenship: <%= theStudent.getCitizenship() %>
+		<br />  
+		Country of residence: <%= theStudent.getResidence() %>
+		<br /> 
+		<br />
 	</body>
 </html>
