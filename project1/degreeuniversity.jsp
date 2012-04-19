@@ -6,10 +6,8 @@
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			Degree theDegree = new Degree();
 			
-			String location = request.getParameter("location");
 			int lid = Integer.parseInt(request.getParameter("lid"));
 			
-			theDegree.setLocation(location);
 			theDegree.setLID(lid);
 			
 			session.setAttribute("curDegree", theDegree);

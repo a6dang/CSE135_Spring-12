@@ -3,11 +3,9 @@
 	<head>
 		<title>Country of Residence</title>
 		<%
-			String citizenship = request.getParameter("citizenship");
 			int citizenID = Integer.parseInt(request.getParameter("cid"));
 			
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			theStudent.setCitizenship(citizenship);
 			theStudent.setCID(citizenID);
 			
 			Vector countries = (Vector) session.getAttribute("countries");
@@ -37,7 +35,7 @@
 					for (int i = 0; i < countries.size()/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
+					<a href="address.jsp?rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -49,7 +47,7 @@
 					for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
+					<a href="address.jsp?rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -61,7 +59,7 @@
 					for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
+					<a href="address.jsp?rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%

@@ -42,7 +42,7 @@
 					for (int i = 0; i < countries.size()/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -54,7 +54,7 @@
 					for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -66,7 +66,7 @@
 					for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%

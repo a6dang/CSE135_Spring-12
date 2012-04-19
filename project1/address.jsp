@@ -3,11 +3,9 @@
 	<head>
 	<title>Address</title>
 		<%
-			String residence = request.getParameter("residence");
 			int residenceID = Integer.parseInt(request.getParameter("rid"));
 			
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			theStudent.setResidence(residence);
 			theStudent.setRID(residenceID);
 			
 			Vector countries = (Vector) session.getAttribute("countries");

@@ -27,7 +27,7 @@
 				for (int i = 0; i < specs.size(); i++){
 					nextSpec = (String) specs.elementAt(i);
 			%>				
-				<option value="<%= nextSpec %>"><%= nextSpec %></option>
+				<option value="<%= i %>"><%= nextSpec %></option>
 			<%
 				}
 			%>

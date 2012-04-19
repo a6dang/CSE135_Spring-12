@@ -5,9 +5,6 @@ public class Degree{
 	private int uid; //university id of the degree obtained
 	private int did; //discipline id of the degree obtained
 	
-	private String location;
-	private String university;
-	private String major;
 	private String gpa;
 	private String degreeLevel;
 	private String gradMonth;
@@ -18,8 +15,6 @@ public class Degree{
 		uid = -1;
 		did = -1;
 		
-		university = "";
-		major = "";
 		gpa = "";
 		degreeLevel = "";
 		gradMonth = "";
@@ -48,30 +43,6 @@ public class Degree{
 	
 	public int getDID(){
 		return this.did;
-	}
-	
-	public void setLocation(String newLocation){
-		this.location = newLocation;
-	}
-	
-	public String getLocation(){
-		return this.location;
-	}
-	
-	public void setUniversity(String newUniversity){
-		this.university = newUniversity;
-	}
-	
-	public String getUniversity(){
-		return this.university;
-	}
-	
-	public void setMajor(String newMajor){
-		this.major = newMajor;
-	}
-	
-	public String getMajor(){
-		return this.major;
 	}
 	
 	public void setGPA(String newGPA){

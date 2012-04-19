@@ -53,7 +53,7 @@
 					for (int i = 0; i < uniLocs.size()/3; i++){
 						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
+						<a href="degreeuniversity.jsp?lid=<%= i %>"><%= nextLoc %></a>
 						<br />
 				<%
 					}
@@ -64,7 +64,7 @@
 					for (int i = uniLocs.size()/3; i < (uniLocs.size()*2)/3; i++){
 						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
+						<a href="degreeuniversity.jsp?lid=<%= i %>"><%= nextLoc %></a>
 						<br />		
 				<%
 					}
@@ -75,7 +75,7 @@
 					for (int i = (uniLocs.size()*2)/3; i < uniLocs.size(); i++){
 						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
+						<a href="degreeuniversity.jsp?lid=<%= i %>"><%= nextLoc %></a>
 						<br />
 				<%
 					}

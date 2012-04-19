@@ -11,11 +11,9 @@
 			Vector majors = (Vector) session.getAttribute("majors");
 			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
 			
-			String specialization = request.getParameter("specialization");
+			int sid = Integer.parseInt(request.getParameter("specialization"));
 			
-			theStudent.setSID(specs.indexOf(specialization));
-			theStudent.setSpecialization(specialization);
-			
+			theStudent.setSID(sid);
 		%>
 	</head>
 	<body>

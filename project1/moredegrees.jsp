@@ -81,7 +81,7 @@
 		<br />
 		
 		<% 
-				for(int i=0; i<numDegrees; i++){
+			for(int i=0; i<numDegrees; i++){
 			Degree curDegree = theStudent.getDegree(i);
 		%>
 			<br />

@@ -17,7 +17,6 @@
 			if(uid == listUnis.size())
 				listUnis.add(university);
 			
-			theDegree.setUniversity(university);
 			theDegree.setUID(uid);
 			
 			Vector majors = (Vector) session.getAttribute("majors");

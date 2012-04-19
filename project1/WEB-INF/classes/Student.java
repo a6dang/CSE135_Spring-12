@@ -15,11 +15,9 @@ public class Student{
 	private String lName;
 	
 	//second page
-	private String citizenship;
 	private int cid;
 	
 	//third page
-	private String residence;
 	private int rid;
 	
 	//fourth page
@@ -31,22 +29,15 @@ public class Student{
 	private String telephoneCode;
 	private String phoneNumber;
 	
-	//degree information
-	private ArrayList<HashMap<String, String>> listOfDegrees;
-	
 	private ArrayList<Degree> degrees;
 	
 	//specialization
-	private String specialization;
 	private int sid;
 	
 	public Student(){
 		fName = "";
 		midInitial = "";
 		lName = "";
-		
-		citizenship = "";
-		residence = "";
 		
 		stAddress = "";
 		city = "";
@@ -56,13 +47,10 @@ public class Student{
 		telephoneCode = "";
 		phoneNumber = "";
 		
-		specialization = "";
-		
 		cid = -1;
 		rid = -1;
 		sid = -1;
 		
-		listOfDegrees = new ArrayList<HashMap<String, String>>();
 		degrees = new ArrayList<Degree>();
 	}
 	
@@ -88,22 +76,6 @@ public class Student{
 	
 	public String getLName(){
 		return this.lName;
-	}
-	
-	public void setCitizenship(String newCitizenship){
-		this.citizenship = newCitizenship;
-	}
-	
-	public String getCitizenship(){
-		return this.citizenship;
-	}
-	
-	public void setResidence(String newResidence){
-		this.residence = newResidence;
-	}
-	
-	public String getResidence(){
-		return this.residence;
 	}
 	
 	public void setStAddress(String newStAddress){
@@ -201,13 +173,5 @@ public class Student{
 
 	public int numOfDegrees(){
 		return this.degrees.size();
-	}
-	
-	public void setSpecialization(String newSpecialization){
-		this.specialization = newSpecialization;
-	}
-	
-	public String getSpecialization(){
-		return this.specialization;
 	}
 }
