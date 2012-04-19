@@ -5,22 +5,25 @@
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			int numDegrees = theStudent.numOfDegrees();
+			
+			Vector countries = (Vector) session.getAttribute("countries");
 		%>
 	</head>
 	<body>
-		<h2>Please choose a specialization from the dropdown menu:<h2>
+		<h2>Please choose a specialization from the dropdown menu:</h2>
 		<br />
-		
 		<!-- Drop down menu for specializations. -->
 		<form action="verification.jsp" method="POST" >
 			<select name="specialization">
 			<%
 				support s = new support();
 				String path1 = config.getServletContext().getRealPath("specializations.txt");
-				Vector spec = s.getSpecializations(path1);
+				Vector specs = s.getSpecializations(path1);
+				session.setAttribute("specs",specs);
+				
 				String nextSpec = "";
-				for (int i = 0; i < spec.size(); i++){
-					nextSpec = (String) spec.elementAt(i);
+				for (int i = 0; i < specs.size(); i++){
+					nextSpec = (String) specs.elementAt(i);
 			%>				
 				<option value="<%= nextSpec %>"><%= nextSpec %></option>
 			<%
@@ -37,16 +40,16 @@
 		<br />    
 		Last name: <%= theStudent.getLName() %>
 		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
+		Country of citizenship: <%= countries.get(theStudent.getCID()) %>
 		<br />  
-		Country of residence: <%= theStudent.getResidence() %>
+		Country of residence: <%= countries.get(theStudent.getRID()) %>
 		<br />  
 		Street Address: <%= theStudent.getStAddress() %>
 		<br />  
 		City: <%= theStudent.getCity() %>
 		<br />  
 		<%
-		if ( theStudent.getResidence().equals("United States")){
+		if ( countries.get(theStudent.getRID()).equals("United States")){
 		%>
 			State: <%= theStudent.getState() %>
 		<%
@@ -63,27 +66,7 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-		<% 
-			for(int i=0; i<numDegrees; i++){
-		%>
-			<br />
-			<b>Degree <%=i+1%></b>
-			<br />
-			<b>University:</b> <%=theStudent.getDegreeInfo(i,"university")%>
-			<br />
-			<b>Location:</b> <%=theStudent.getDegreeInfo(i,"location")%>
-			<br />
-			<b>Discipline:</b> <%=theStudent.getDegreeInfo(i,"major")%>
-			<br />
-			<b>GPA:</b> <%=theStudent.getDegreeInfo(i,"gpa")%>
-			<br />
-			<b>Degree Level:</b> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
-			<br />
-			<b>Graduation Date:</b> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <%=theStudent.getDegreeInfo(i,"gradYear")%>
-			<br /><br />
-		<% 
-			} 
-		%>
+
 		<br />
 	</body>
 </html>

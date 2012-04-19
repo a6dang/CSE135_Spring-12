@@ -2,6 +2,7 @@ package Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import Degree.Degree;
 
 /**
  * Student class to store applicant information
@@ -15,8 +16,11 @@ public class Student{
 	
 	//second page
 	private String citizenship;
+	private int cid;
+	
 	//third page
 	private String residence;
+	private int rid;
 	
 	//fourth page
 	private String stAddress;
@@ -30,8 +34,11 @@ public class Student{
 	//degree information
 	private ArrayList<HashMap<String, String>> listOfDegrees;
 	
+	private ArrayList<Degree> degrees;
+	
 	//specialization
 	private String specialization;
+	private int sid;
 	
 	public Student(){
 		fName = "";
@@ -51,7 +58,12 @@ public class Student{
 		
 		specialization = "";
 		
+		cid = -1;
+		rid = -1;
+		sid = -1;
+		
 		listOfDegrees = new ArrayList<HashMap<String, String>>();
+		degrees = new ArrayList<Degree>();
 	}
 	
 	public void setFName(String newFName){
@@ -149,21 +161,46 @@ public class Student{
 		return this.phoneNumber;
 	}
 	
-	public Integer numOfDegrees(){
-		return this.listOfDegrees.size();
+	public void setCID(int newCID){
+		if(newCID>=0)
+			this.cid = newCID;
 	}
 	
-	public void insertNewDegree(){
-		this.listOfDegrees.add(new HashMap<String,String>());
+	public int getCID(){
+		return this.cid;
 	}
 	
-	public void setDegreeInfo(Integer whichDegree, String key, String value){
-		// Add or update a key-value pair in the specified degree.
-		this.listOfDegrees.get(whichDegree).put(key, value);
+	public void setRID(int newRID){
+		if(newRID>=0)
+			this.rid = newRID;
 	}
 	
-	public String getDegreeInfo(Integer whichDegree, String key){
-		return this.listOfDegrees.get(whichDegree).get(key);
+	public int getRID(){
+		return this.rid;
+	}
+	
+	public void setSID(int newSID){
+		if(newSID>=0)
+			this.sid = newSID;
+	}
+	
+	public int getSID(){
+		return this.sid;
+	}
+	
+	public void addDegree(Degree theDegree){
+		this.degrees.add(theDegree);
+	}
+	
+	public Degree getDegree(int i){
+		if(i>=0 && i < degrees.size())
+			return degrees.get(i);
+		else
+			return null;
+	}
+
+	public int numOfDegrees(){
+		return this.degrees.size();
 	}
 	
 	public void setSpecialization(String newSpecialization){

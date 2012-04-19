@@ -1,10 +1,11 @@
-<%@page import=" Student.*, support.*, java.util.*" %>
+<%@page import=" Student.*, Degree.*, support.*, java.util.*" %>
 <html>
 	<head>
 		<title>More Degrees</title>
 		<%
 			Student theStudent = (Student) session.getAttribute("theStudent");
-			int numDegrees = theStudent.numOfDegrees();
+			Degree theDegree = (Degree) session.getAttribute("curDegree");
+			Vector majors = (Vector) session.getAttribute("majors");
 			
 			String major = request.getParameter("major");
 			String gpa = request.getParameter("GPA");
@@ -12,16 +13,29 @@
 			String gradMonth = request.getParameter("gradMonth");
 			String gradYear = request.getParameter("gradYear");
 			
-			theStudent.setDegreeInfo(numDegrees-1,"major",major);
-			theStudent.setDegreeInfo(numDegrees-1,"gpa",gpa);
-			theStudent.setDegreeInfo(numDegrees-1,"degreeLevel",degreeLevel);
-			theStudent.setDegreeInfo(numDegrees-1,"gradMonth",gradMonth);
-			theStudent.setDegreeInfo(numDegrees-1,"gradYear",gradYear);
+			int did = majors.indexOf(major);
+			if(did == -1){
+				did = majors.size();
+				majors.add(major);
+			}
+			
+			theDegree.setDID(did);
+			theDegree.setMajor(major);
+			theDegree.setGPA(gpa);
+			theDegree.setDegreeLevel(degreeLevel);
+			theDegree.setGradMonth(gradMonth);
+			theDegree.setGradYear(gradYear);
+			
+			theStudent.addDegree(theDegree);
+			
+			int numDegrees = theStudent.numOfDegrees();
+			
+			Vector countries = (Vector) session.getAttribute("countries");
 		%>
 	</head>
 	<body>
 		<h2>Is this the last degree?</h2>
-		
+
 		<!-- Submit next degree button. -->
 		<form action="degreelocation.jsp" method="POST">
 			<input type="submit" value="Submit Next Degree" />
@@ -39,16 +53,16 @@
 		<br />    
 		Last name: <%= theStudent.getLName() %>
 		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
+		Country of citizenship: <%= countries.get(theStudent.getCID()) %>
 		<br />  
-		Country of residence: <%= theStudent.getResidence() %>
+		Country of residence: <%= countries.get(theStudent.getRID()) %>
 		<br />  
 		Street Address: <%= theStudent.getStAddress() %>
 		<br />  
 		City: <%= theStudent.getCity() %>
 		<br />  
 		<%
-		if ( theStudent.getResidence().equals("United States")){
+		if ( countries.get(theStudent.getRID()).equals("United States")){
 		%>
 			State: <%= theStudent.getState() %>
 		<%
@@ -65,27 +79,9 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-		<% 
-			for(int i=0; i<numDegrees; i++){
-		%>
-			<br />
-			<b>Degree <%=i+1%></b>
-			<br />
-			<b>University:</b> <% if(theStudent.getDegreeInfo(i,"university") != null){ %> <%=theStudent.getDegreeInfo(i,"university")%> <% } %>
-			<br />
-			<b>Location:</b> <% if(theStudent.getDegreeInfo(i,"location") != null){ %> <%=theStudent.getDegreeInfo(i,"location")%> <% } %>
-			<br />
-			<b>Discipline:</b> <% if(theStudent.getDegreeInfo(i,"major") != null){ %> <%=theStudent.getDegreeInfo(i,"major")%> <% } %>
-			<br />
-			<b>GPA:</b> <% if(theStudent.getDegreeInfo(i,"gpa") != null){ %> <%=theStudent.getDegreeInfo(i,"gpa")%> <% } %>
-			<br />
-			<b>Degree Level:</b> <% if(theStudent.getDegreeInfo(i,"degreeLevel") != null){ %> <%=theStudent.getDegreeInfo(i,"degreeLevel")%> <% } %>
-			<br />
-			<b>Graduation Date:</b> <% if(theStudent.getDegreeInfo(i,"gradMonth") != null){ %> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <% } %> <% if(theStudent.getDegreeInfo(i,"gradYear") != null){ %> <%=theStudent.getDegreeInfo(i,"gradYear")%> <% } %>
-			<br /><br />
-		<% 
-			} 
-		%>
+		<!--
+
+		-->
 		<br />
 	</body>
 </html>

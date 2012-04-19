@@ -28,18 +28,21 @@
 		<br />  
 		<h2>Country of Citizenship:</h2>
 		<!-- List all countries. -->
-		<table>
+		<table border="1">
 			<tr>
 				<td>
 				<%
 					support s = new support();
 					String path1 = config.getServletContext().getRealPath("countries.txt");
 					Vector countries = s.getCountries(path1);
+					
+					session.setAttribute("countries",countries);
+					
 					String nextCountry = "";
 					for (int i = 0; i < countries.size()/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -51,7 +54,7 @@
 					for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -63,7 +66,7 @@
 					for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?citizenship=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="residence.jsp?citizenship=<%= nextCountry %>&cid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%

@@ -1,3 +1,7 @@
+TEAM INFO:
+Nathaniel Asunction A08795157
+Anthony Dang A08740980
+
 Assignment 1 Architecture
 
 This webapp follows the model 1 design pattern that features a linear

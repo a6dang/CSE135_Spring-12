@@ -1,13 +1,14 @@
-<%@page import=" Student.*, support.*, java.util.*" %>
+<%@page import=" Student.*, Degree.*, support.*, java.util.*" %>
 <html>
 	<head>
 		<title>Provide Degrees - Choose Locations</title>
 		<%
+			Vector countries = (Vector) session.getAttribute("countries");
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			int numDegrees = theStudent.numOfDegrees();
 
 			if(numDegrees == 0){
-				if ( theStudent.getResidence().equals("United States")){
+				if (countries.get(theStudent.getRID()).equals("United States")){
 					String state = request.getParameter("state");
 					theStudent.setState(state);
 				} else {
@@ -27,6 +28,15 @@
 				theStudent.setAreaCode(area);
 				theStudent.setPhoneNumber(phone);
 			}
+			
+			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
+			
+			if(uniLocs == null){
+				support s = new support();
+				String path1 = config.getServletContext().getRealPath("universities.txt");
+				uniLocs = s.getUniversities(path1);	
+				session.setAttribute("uniLocs", uniLocs);
+			}
 		%>
 	</head>
 	<body>
@@ -35,18 +45,15 @@
 		<br />
 		
 		<!-- Show all U.S. states and foreign countries. -->
-		<table>
+		<table border="1">
 			<tr>
 				<td>
-				<%
-					support s = new support();
-					String path1 = config.getServletContext().getRealPath("universities.txt");
-					Vector universities = s.getUniversities(path1);
-					String nextUniversity = "";
-					for (int i = 0; i < universities.size()/3; i++){
-						nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
+				<%	
+					String nextLoc = "";
+					for (int i = 0; i < uniLocs.size()/3; i++){
+						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
 						<br />
 				<%
 					}
@@ -54,10 +61,10 @@
 				</td>
 				<td>
 				<%
-					for (int i = universities.size()/3; i < (universities.size()*2)/3; i++){
-						nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
+					for (int i = uniLocs.size()/3; i < (uniLocs.size()*2)/3; i++){
+						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
 						<br />		
 				<%
 					}
@@ -65,10 +72,10 @@
 				</td>
 				<td>
 				<%
-					for (int i = (universities.size()*2)/3; i < universities.size(); i++){
-						nextUniversity = (String) ((Vector) universities.elementAt(i)).elementAt(0);
+					for (int i = (uniLocs.size()*2)/3; i < uniLocs.size(); i++){
+						nextLoc = (String) ((Vector) uniLocs.elementAt(i)).elementAt(0);
 				%>
-						<a href="degreeuniversity.jsp?location=<%= nextUniversity %>&idx=<%= i %>"><%= nextUniversity %></a>
+						<a href="degreeuniversity.jsp?location=<%= nextLoc %>&lid=<%= i %>"><%= nextLoc %></a>
 						<br />
 				<%
 					}
@@ -84,16 +91,16 @@
 		<br />    
 		Last name: <%= theStudent.getLName() %>
 		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
+		Country of citizenship: <%= countries.get(theStudent.getCID()) %>
 		<br />  
-		Country of residence: <%= theStudent.getResidence() %>
+		Country of residence: <%= countries.get(theStudent.getRID()) %>
 		<br />  
 		Street Address: <%= theStudent.getStAddress() %>
 		<br />  
 		City: <%= theStudent.getCity() %>
 		<br />  
 		<%
-		if ( theStudent.getResidence().equals("United States")){
+		if ( countries.get(theStudent.getRID()).equals("United States")){
 		%>
 			State: <%= theStudent.getState() %>
 		<%
@@ -110,30 +117,7 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-		
-		<% 	
-		if(numDegrees > 0){
-			for(int i=0; i< numDegrees; i++){
-		%>
-			<br />
-			<b>Degree <%=i+1%></b>
-			<br />
-			<b>University:</b> <% if(theStudent.getDegreeInfo(i,"university") != null) %> <%=theStudent.getDegreeInfo(i,"university")%>
-			<br />
-			<b>Location:</b> <% if(theStudent.getDegreeInfo(i,"location") != null) %> <%=theStudent.getDegreeInfo(i,"location")%>
-			<br />
-			<b>Discipline:</b> <% if(theStudent.getDegreeInfo(i,"major") != null) %> <%=theStudent.getDegreeInfo(i,"major")%>
-			<br />
-			<b>GPA:</b> <% if(theStudent.getDegreeInfo(i,"gpa") != null) %> <%=theStudent.getDegreeInfo(i,"gpa")%>
-			<br />
-			<b>Degree Level:</b> <% if(theStudent.getDegreeInfo(i,"degreeLevel") != null) %> <%=theStudent.getDegreeInfo(i,"degreeLevel")%>
-			<br />
-			<b>Graduation Date:</b> <% if(theStudent.getDegreeInfo(i,"gradMonth") != null) %> <%=theStudent.getDegreeInfo(i,"gradMonth")%> <% if(theStudent.getDegreeInfo(i,"gradYear") != null) %> <%=theStudent.getDegreeInfo(i,"gradYear")%>
-			<br /><br />
-		<% 
-			} 
-		}
-		%>
+
 		<br />
 		<br />		
 	</body>

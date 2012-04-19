@@ -4,9 +4,13 @@
 	<title>Address</title>
 		<%
 			String residence = request.getParameter("residence");
+			int residenceID = Integer.parseInt(request.getParameter("rid"));
 			
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			theStudent.setResidence(residence);
+			theStudent.setRID(residenceID);
+			
+			Vector countries = (Vector) session.getAttribute("countries");
 		%>
 	</head>
 	<body>
@@ -18,18 +22,18 @@
 			City: <input type="text" name="city" size="15"/>
 			<br />
 			<%
-				if (theStudent.getResidence().equals("United States")){
+				if (countries.get(theStudent.getRID()).equals("United States")){
 			%>
 				State: <input type="text" name="state" size="15"/>
 			<%
 				} else {
 			%>
-				Telephone code: <input type="text" name="telcode" size="15"/>
+				Telephone code: <input type="text" name="telcode" size="3"/>
 			<%
 				}
 			%>
 			<br />
-			Zip Code: <input type="text" name="zip" size="15"/>
+			Zip Code: <input type="text" name="zip" size="8"/>
 			<br />
 			Area Code: <input type="text" name="area" size="4"/>
 			<br />
@@ -45,9 +49,9 @@
 		<br />    
 		Last name: <%= theStudent.getLName() %>
 		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
+		Country of citizenship: <%= countries.get(theStudent.getCID()) %>
 		<br />  
-		Country of residence: <%= theStudent.getResidence() %>
+		Country of residence: <%= countries.get(theStudent.getRID()) %>
 		<br /> 
 		<br />
 	</body>

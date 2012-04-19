@@ -4,9 +4,13 @@
 		<title>Country of Residence</title>
 		<%
 			String citizenship = request.getParameter("citizenship");
+			int citizenID = Integer.parseInt(request.getParameter("cid"));
 			
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			theStudent.setCitizenship(citizenship);
+			theStudent.setCID(citizenID);
+			
+			Vector countries = (Vector) session.getAttribute("countries");
 		%>
 	</head>
 	<body>
@@ -18,25 +22,22 @@
 		<br />    
 		Last name: <%= theStudent.getLName() %>
 		<br />  
-		Country of citizenship: <%= theStudent.getCitizenship() %>
+		Country of citizenship: <%= countries.get(theStudent.getCID()) %>
 		<br />  
 		<br />
 		<h2>Country of Residence:</h2>
-		<a href="address.jsp?residence=<%= theStudent.getCitizenship() %>">Same country as citizenship</a>
+		<a href="address.jsp?residence=<%= countries.get(theStudent.getCID()) %>">Same country as citizenship</a>
 	
 		<!-- List all countries. -->
-		<table>
+		<table border="1">
 			<tr>
 				<td>
 				<%
-					support s = new support();
-					String path1 = config.getServletContext().getRealPath("countries.txt");
-					Vector countries = s.getCountries(path1);
 					String nextCountry = "";
 					for (int i = 0; i < countries.size()/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -48,7 +49,7 @@
 					for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -60,7 +61,7 @@
 					for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="address.jsp?residence=<%= nextCountry %>"><%= nextCountry %></a>
+					<a href="address.jsp?residence=<%= nextCountry %>&rid=<%=i%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
