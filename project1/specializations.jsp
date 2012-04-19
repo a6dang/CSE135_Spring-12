@@ -1,4 +1,4 @@
-<%@page import=" Student.*, support.*, java.util.*" %>
+<%@page import=" Student.*, Degree.*, support.*, java.util.*" %>
 <html>
 	<head>
 		<title>Specialization</title>
@@ -7,6 +7,8 @@
 			int numDegrees = theStudent.numOfDegrees();
 			
 			Vector countries = (Vector) session.getAttribute("countries");
+			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
+			Vector majors = (Vector) session.getAttribute("majors");
 		%>
 	</head>
 	<body>
@@ -67,6 +69,28 @@
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
 
+		<% 
+				for(int i=0; i<numDegrees; i++){
+			Degree curDegree = theStudent.getDegree(i);
+		%>
+			<br />
+			<b>Degree <%=i+1%></b>
+			<br />
+			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
+			<br />
+			<b>Location:</b> <%= ((Vector) uniLocs.get(curDegree.getLID())).elementAt(0)%>
+			<br />
+			<b>Discipline:</b> <%= majors.get(curDegree.getDID()) %>
+			<br />
+			<b>GPA:</b> <%= curDegree.getGPA() %>
+			<br />
+			<b>Degree Level:</b> <%= curDegree.getDegreeLevel() %>
+			<br />
+			<b>Graduation Date:</b> <%= curDegree.getGradMonth() %> <%= curDegree.getGradYear() %>
+			<br /><br />
+		<% 
+			} 
+		%>
 		<br />
 	</body>
 </html>

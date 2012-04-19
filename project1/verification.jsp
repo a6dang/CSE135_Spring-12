@@ -8,10 +8,12 @@
 			
 			Vector specs = (Vector) session.getAttribute("specs");
 			Vector countries = (Vector) session.getAttribute("countries");
+			Vector majors = (Vector) session.getAttribute("majors");
+			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
 			
 			String specialization = request.getParameter("specialization");
 			
-			theStudent.setSID(specs.indexOf("specialization"));
+			theStudent.setSID(specs.indexOf(specialization));
 			theStudent.setSpecialization(specialization);
 			
 		%>
@@ -61,11 +63,11 @@ First name: <%= theStudent.getFName() %>
 			<br />
 			<b>Degree <%=i+1%></b>
 			<br />
-			<b>University:</b> <%= curDegree.getUniversity() %>
+			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
 			<br />
-			<b>Location:</b> <%= curDegree.getLocation() %>
+			<b>Location:</b> <%= ((Vector) uniLocs.get(curDegree.getLID())).elementAt(0)%>
 			<br />
-			<b>Discipline:</b> <%= curDegree.getMajor() %>
+			<b>Discipline:</b> <%= majors.get(curDegree.getDID()) %>
 			<br />
 			<b>GPA:</b> <%= curDegree.getGPA() %>
 			<br />
@@ -78,7 +80,7 @@ First name: <%= theStudent.getFName() %>
 		%>
 		
 		
-		<b>Specialization:</b> <%= theStudent.getSpecialization() %>
+		<b>Specialization:</b> <%= specs.get(theStudent.getSID()) %>
 		<br /><br />
 		
 		<!-- Submit and Cancel buttons -->

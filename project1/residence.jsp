@@ -26,7 +26,7 @@
 		<br />  
 		<br />
 		<h2>Country of Residence:</h2>
-		<a href="address.jsp?residence=<%= countries.get(theStudent.getCID()) %>">Same country as citizenship</a>
+		<a href="address.jsp?residence=<%= countries.get(theStudent.getCID()) %>&rid=<%=citizenID%>">Same country as citizenship</a>
 	
 		<!-- List all countries. -->
 		<table border="1">

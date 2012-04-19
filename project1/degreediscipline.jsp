@@ -41,12 +41,11 @@
 				for (int i = 0; i < majors.size(); i++){
 					nextMajor = (String) majors.elementAt(i);
 			%>				
-				<input type="radio" name="major" value="<%= nextMajor %>"/> <%= nextMajor %> <br />
+				<input type="radio" name="major" value="<%= i %>"/> <%= nextMajor %> <br />
 			<%
 				}
 			%>
-			<br />
-			Other discipline: <input type="text" name="major" />
+			<input type="radio" name="major" value="<%=-1%>"/> Other: <input type="text" name="otherMajor" /><br />	
 			<br />
 			Graduation date: <input type="text" name="gradMonth" value="month" size="10" /> 
 			<input type="text" name="gradYear" value="year" size="4" />

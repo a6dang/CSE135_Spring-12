@@ -18,6 +18,7 @@
 			
 			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
 			Vector countries = (Vector) session.getAttribute("countries");
+			Vector listUnis = (Vector) ((Vector) uniLocs.elementAt(lid)).elementAt(1);
 		%>
 	</head>
 	<body>
@@ -29,7 +30,7 @@
 			<tr>
 				<td>
 				<%
-					Vector listUnis = (Vector) ((Vector) uniLocs.elementAt(lid)).elementAt(1);
+					
 					String nextUniversity = "";
 					for (int i = 0; i < listUnis.size()/3; i++){
 						nextUniversity = (String) listUnis.elementAt(i);

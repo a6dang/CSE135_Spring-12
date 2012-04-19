@@ -7,20 +7,19 @@
 			Degree theDegree = (Degree) session.getAttribute("curDegree");
 			Vector majors = (Vector) session.getAttribute("majors");
 			
-			String major = request.getParameter("major");
+			int did = Integer.parseInt(request.getParameter("major"));
 			String gpa = request.getParameter("GPA");
 			String degreeLevel = request.getParameter("degLevel");
 			String gradMonth = request.getParameter("gradMonth");
 			String gradYear = request.getParameter("gradYear");
-			
-			int did = majors.indexOf(major);
+
 			if(did == -1){
 				did = majors.size();
-				majors.add(major);
+				String newMajor = request.getParameter("otherMajor");
+				majors.add(newMajor);
 			}
 			
 			theDegree.setDID(did);
-			theDegree.setMajor(major);
 			theDegree.setGPA(gpa);
 			theDegree.setDegreeLevel(degreeLevel);
 			theDegree.setGradMonth(gradMonth);
@@ -31,6 +30,7 @@
 			int numDegrees = theStudent.numOfDegrees();
 			
 			Vector countries = (Vector) session.getAttribute("countries");
+			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
 		%>
 	</head>
 	<body>
@@ -62,7 +62,7 @@
 		City: <%= theStudent.getCity() %>
 		<br />  
 		<%
-		if ( countries.get(theStudent.getRID()).equals("United States")){
+		if (countries.get(theStudent.getRID()).equals("United States")){
 		%>
 			State: <%= theStudent.getState() %>
 		<%
@@ -79,9 +79,30 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-		<!--
-
-		-->
+		
+		<% 
+				for(int i=0; i<numDegrees; i++){
+			Degree curDegree = theStudent.getDegree(i);
+		%>
+			<br />
+			<b>Degree <%=i+1%></b>
+			<br />
+			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
+			<br />
+			<b>Location:</b> <%= ((Vector) uniLocs.get(curDegree.getLID())).elementAt(0)%>
+			<br />
+			<b>Discipline:</b> <%= majors.get(curDegree.getDID()) %>
+			<br />
+			<b>GPA:</b> <%= curDegree.getGPA() %>
+			<br />
+			<b>Degree Level:</b> <%= curDegree.getDegreeLevel() %>
+			<br />
+			<b>Graduation Date:</b> <%= curDegree.getGradMonth() %> <%= curDegree.getGradYear() %>
+			<br /><br />
+		<% 
+			} 
+		%>
+		
 		<br />
 	</body>
 </html>
