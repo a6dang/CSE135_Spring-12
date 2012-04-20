@@ -13,6 +13,8 @@
 			Vector uniLocs = (Vector) session.getAttribute("uniLocs");
 			Vector listUnis = (Vector) ((Vector) uniLocs.elementAt(theDegree.getLID())).elementAt(1);
 		
+			int numDegrees = theStudent.numOfDegrees();
+			
 			// add the university to the vector if it is a user-specified entry
 			if(uid == listUnis.size())
 				listUnis.add(university);
@@ -91,9 +93,29 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-		<!--
-
-		-->
+		<% 
+			for(int i=0; i<numDegrees; i++){
+			Degree curDegree = theStudent.getDegree(i);
+		%>
+			<br />
+			<b>Degree <%=i+1%></b>
+			<br />
+			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
+			<br />
+			<b>Location:</b> <%= ((Vector) uniLocs.get(curDegree.getLID())).elementAt(0)%>
+			<br />
+			<b>Discipline:</b> <%= majors.get(curDegree.getDID()) %>
+			<br />
+			<b>GPA:</b> <%= curDegree.getGPA() %>
+			<br />
+			<b>Degree Level:</b> <%= curDegree.getDegreeLevel() %>
+			<br />
+			<b>Graduation Date:</b> <%= curDegree.getGradMonth() %> <%= curDegree.getGradYear() %>
+			<br /><br />
+		<% 
+			} 
+		%>	
+		<br />	
 		<br />
 	</body>
 </html>

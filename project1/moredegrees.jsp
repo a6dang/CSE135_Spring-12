@@ -7,7 +7,14 @@
 			Degree theDegree = (Degree) session.getAttribute("curDegree");
 			Vector majors = (Vector) session.getAttribute("majors");
 			
-			int did = Integer.parseInt(request.getParameter("major"));
+			// Temporary case to take care of empty major until JS validation added.
+			String strDid = request.getParameter("major");
+			int did = -1;
+			if(strDid != null){
+				did = Integer.parseInt(strDid);
+			}
+			
+			
 			String gpa = request.getParameter("GPA");
 			String degreeLevel = request.getParameter("degLevel");
 			String gradMonth = request.getParameter("gradMonth");
@@ -102,7 +109,8 @@
 		<% 
 			} 
 		%>
-		
+		<br />
+		<br />
 		<br />
 	</body>
 </html>

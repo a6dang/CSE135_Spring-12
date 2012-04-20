@@ -37,6 +37,15 @@
 				uniLocs = s.getUniversities(path1);	
 				session.setAttribute("uniLocs", uniLocs);
 			}
+			
+			Vector majors = (Vector) session.getAttribute("majors");
+			
+			if(majors == null){
+				support s = new support();
+				String path1 = config.getServletContext().getRealPath("majors.txt");
+				majors = s.getMajors(path1);
+				session.setAttribute("majors",majors);
+			}
 		%>
 	</head>
 	<body>
@@ -117,7 +126,29 @@
 		<br />  
 		Phone Number: <%= theStudent.getPhoneNumber() %>
 		<br />
-
+		<br />
+		<% 
+			for(int i=0; i<numDegrees; i++){
+			Degree curDegree = theStudent.getDegree(i);
+		%>
+			<br />
+			<b>Degree <%=i+1%></b>
+			<br />
+			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
+			<br />
+			<b>Location:</b> <%= ((Vector) uniLocs.get(curDegree.getLID())).elementAt(0)%>
+			<br />
+			<b>Discipline:</b> <%= majors.get(curDegree.getDID()) %>
+			<br />
+			<b>GPA:</b> <%= curDegree.getGPA() %>
+			<br />
+			<b>Degree Level:</b> <%= curDegree.getDegreeLevel() %>
+			<br />
+			<b>Graduation Date:</b> <%= curDegree.getGradMonth() %> <%= curDegree.getGradYear() %>
+			<br /><br />
+		<% 
+			} 
+		%>
 		<br />
 		<br />		
 	</body>

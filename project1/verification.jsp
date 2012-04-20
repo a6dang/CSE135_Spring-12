@@ -18,9 +18,9 @@
 	</head>
 	<body>
 		<h2>Verify that this information is correct:</h2>
-		<br /><br />
 		<!-- Display user information. -->
-First name: <%= theStudent.getFName() %>
+		<h3>Student Information:</h3>
+		First name: <%= theStudent.getFName() %>
 		<br />    
 		Middle initial: <%= theStudent.getMidInitial() %>
 		<br />    
