@@ -1,0 +1,58 @@
+CREATE TABLE students
+(
+id integer,
+f_name text,
+m_initial text,
+l_name text,
+country_citizenship integer,
+country_residence integer,
+street_addr text,
+city text,
+state text,
+telephone_code integer,
+zip_code integer,
+area_code integer,
+phone_no integer,
+specialization id
+)
+
+CREATE TABLE degrees
+(
+id integer,
+university integer,
+location integer,
+discipline integer,
+gpa double precision,
+grad_month integer,
+grad_year integer
+)
+
+CREATE TABLE universities
+(
+id integer,
+university text
+)
+
+CREATE TABLE location
+(
+id integer,
+location text
+)
+
+CREATE TABLE countries
+(
+id integer,
+country text
+)
+
+CREATE TABLE disciplines
+(
+id integer,
+discipline text
+)
+
+CREATE TABLE specializations
+(
+id integer,
+specialization text
+)
