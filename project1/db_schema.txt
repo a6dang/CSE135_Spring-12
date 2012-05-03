@@ -1,6 +1,6 @@
 CREATE TABLE students
 (
-id integer,
+id SERIAL PRIMARY KEY,
 f_name text,
 m_initial text,
 l_name text,
@@ -12,47 +12,47 @@ state text,
 telephone_code integer,
 zip_code integer,
 area_code integer,
-phone_no integer,
-specialization id
+phone_no text,
+specialization_id integer
 )
 
 CREATE TABLE degrees
 (
 id integer,
-university integer,
-location integer,
-discipline integer,
+university_id integer,
+location_id integer,
+discipline_id integer,
 gpa double precision,
-grad_month integer,
+grad_month text,
 grad_year integer
 )
 
 CREATE TABLE universities
 (
-id integer,
-university text
+university_id integer,
+university_name text
 )
 
 CREATE TABLE location
 (
-id integer,
-location text
+location_id integer,
+location_name text
 )
 
 CREATE TABLE countries
 (
-id integer,
-country text
+country_id integer,
+country_name text
 )
 
 CREATE TABLE disciplines
 (
-id integer,
-discipline text
+discipline_id integer,
+discipline_name text
 )
 
 CREATE TABLE specializations
 (
-id integer,
-specialization text
+specialization_id integer,
+specialization_name text
 )

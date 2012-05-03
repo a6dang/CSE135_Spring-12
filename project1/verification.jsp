@@ -82,8 +82,10 @@
 		<br /><br />
 		
 		<!-- Submit and Cancel buttons -->
-		<form action="" method="POST" >
+		<form action="confirmation.jsp" method="POST" >
 			<input type="submit" value="Submit" />
+		</form>
+		<form action="cancellation.jsp" method="POST" >
 			<input type="submit" value="Cancel" />
 		</form>
 	</body>
