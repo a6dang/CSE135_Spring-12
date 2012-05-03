@@ -26,33 +26,3 @@ gpa double precision,
 grad_month text,
 grad_year integer
 )
-
-CREATE TABLE universities
-(
-university_id integer,
-university_name text
-)
-
-CREATE TABLE location
-(
-location_id integer,
-location_name text
-)
-
-CREATE TABLE countries
-(
-country_id integer,
-country_name text
-)
-
-CREATE TABLE disciplines
-(
-discipline_id integer,
-discipline_name text
-)
-
-CREATE TABLE specializations
-(
-specialization_id integer,
-specialization_name text
-)
