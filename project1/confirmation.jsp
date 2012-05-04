@@ -14,7 +14,8 @@
             
         Connection conn = null;
         PreparedStatement pstmt = null;
-          
+        int studentID = -1;
+		 
         try {
             // Registering Postgresql JDBC driver with the DriverManager
             Class.forName("org.postgresql.Driver");
@@ -35,6 +36,9 @@
 			
 			String insertStatement = "";
 			
+			Integer telephone_code = -1;
+			String state = "";
+			
 			// retrieve all variables from student object to add to the db.
 			String f_name = theStudent.getFName();
 			String m_initial = theStudent.getMidInitial();
@@ -43,15 +47,17 @@
 			Integer country_residence = theStudent.getRID();
 			String street_addr = theStudent.getStAddress();
 			String city = theStudent.getCity();
-			Integer telephone_code = Integer.parseInt(theStudent.getTelephoneCode());
-			String state = theStudent.getState();
+			if (theStudent.getTelephoneCode() == "")
+				state = theStudent.getState();
+			else
+				telephone_code = Integer.parseInt(theStudent.getTelephoneCode());
 			Integer zip_code = Integer.parseInt(theStudent.getZipCode());
 			Integer area_code = Integer.parseInt(theStudent.getAreaCode());
 			String phone_no = theStudent.getPhoneNumber();
 			Integer specialization_id = theStudent.getSID();
 			
 			// insert the applicant into our database.
-			if (telephone_code == null){
+			if (telephone_code == -1){
 				// the student has no telephone code, insert state.
 				insertStatement = "INSERT INTO students (f_name,m_initial,l_name,";
 				insertStatement += "country_citizenship,country_residence,";
@@ -59,7 +65,6 @@
 				insertStatement += "area_code,phone_no,specialization_id) VALUES";
 				insertStatement += "('"+ f_name +"','"+ m_initial +"','"+ l_name +"',"+ country_citizenship +","+ country_residence +",'"+ street_addr +"',";
 				insertStatement += "'"+ city +"','"+ state +"',"+ zip_code +","+ area_code +",'"+ phone_no +"',"+ specialization_id +")";
-				pstmt = conn.prepareStatement(insertStatement);
 			}else{
 				// the student does have a telephone code, insert this and not state.
 				insertStatement = "INSERT INTO students (f_name,m_initial,l_name,";
@@ -68,31 +73,50 @@
 				insertStatement += "area_code,phone_no,specialization_id) VALUES";
 				insertStatement += "('"+ f_name +"','"+ m_initial +"','"+ l_name +"',"+ country_citizenship +","+ country_residence +",'"+ street_addr +"',";
 				insertStatement += "'"+ city +"','"+ telephone_code +"',"+ zip_code +","+ area_code +",'"+ phone_no +"',"+ specialization_id +")";
-				pstmt = conn.prepareStatement(insertStatement);
 			}
-			
-			%>
-				<%= insertStatement %>
-			<%
+			pstmt = conn.prepareStatement(insertStatement);
 			
 			// notice the function is executeUpdate, not executeQuery, since we do not expect a return value
 			pstmt.executeUpdate();
-        %>
+
+			// get the student id
+			String selectStatement = "SELECT MAX(id) as id FROM students";
+			pstmt = conn.prepareStatement(selectStatement);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				studentID = rs.getInt("id");
+			}
 		
-		<%
 			// change the insert statement so we can loop through all the degrees
 			// and add each one to the database.
 			Degree nextDegree = null;
-			for (int i = 0; i < theStudent.numOfDegrees; i++){
+			Integer lid = null;
+			Integer uid = null;
+			Integer did = null;
+			Double gpa = null;
+			String degreeLevel = null;
+			String gradMonth = null;
+			String gradYear = null;
+			
+			for (int i = 0; i < theStudent.numOfDegrees(); i++){
 				// first, lets save the variables per degree.
 				nextDegree = theStudent.getDegree(i);
-				
+				lid = nextDegree.getLID();
+				uid = nextDegree.getUID();
+				did = nextDegree.getDID();
+				gpa = Double.parseDouble(nextDegree.getGPA());
+				degreeLevel = nextDegree.getDegreeLevel();
+				gradMonth = nextDegree.getGradMonth();
+				gradYear = nextDegree.getGradYear();
 				
 				// then, lets insert this degree info into the db.
-				
-				
-				
-				
+				insertStatement = "INSERT INTO degrees (id,university_id,location_id,";
+				insertStatement += "discipline_id,gpa,degree_level,grad_month,grad_year) VALUES";
+				insertStatement += "("+ studentID +","+ uid +","+ lid +","+ did +","+ gpa +",'"+ degreeLevel +"',";
+				insertStatement += "'"+ gradMonth +"',"+ gradYear +")";
+				pstmt = conn.prepareStatement(insertStatement);
+				pstmt.executeUpdate();
 			}
 		%>
 			
@@ -126,7 +150,8 @@
         %>
 	</head>
 	<body>
-		TESTING...
+		<h1>Confirmation Page</h1>
+		YOUR STUDENT ID IS: <%= studentID %>
 		<!-- id of the person's entry in our db -->
 	</body>
 </html>

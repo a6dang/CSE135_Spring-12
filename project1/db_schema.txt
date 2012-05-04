@@ -23,6 +23,7 @@ university_id integer,
 location_id integer,
 discipline_id integer,
 gpa double precision,
+degree_level text,
 grad_month text,
 grad_year integer
 )
