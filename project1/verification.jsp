@@ -13,7 +13,7 @@
 			
 			int sid = Integer.parseInt(request.getParameter("specialization"));
 			
-			theStudent.setSID(sid);
+			theStudent.setSID(sid+1);
 		%>
 	</head>
 	<body>
@@ -78,7 +78,7 @@
 		%>
 		
 		
-		<b>Specialization:</b> <%= specs.get(theStudent.getSID()) %>
+		<b>Specialization:</b> <%= specs.get(theStudent.getSID()-1) %>
 		<br /><br />
 		
 		<!-- Submit and Cancel buttons -->

@@ -21,7 +21,7 @@
 
             // Open a connection to the database using DriverManager
 			conn = DriverManager.getConnection(
-					"jdbc:postgresql://localhost/postgres?" +
+					"jdbc:postgresql://localhost/cse135?" +
                     "user=postgres&password=password");
         %>
             
@@ -39,9 +39,9 @@
 				count = rs.getInt("count");
 			}
 			
-			int[] array = new int[count];
+			int[] array = new int[count+1];
 			
-			for (int i = 0; i < count; i++){
+			for (int i = 1; i <= count; i++){
 				// select count(specialization_id) from student where specialization_id = i
 				selectStatement = "SELECT COUNT(specialization_id) as count FROM students WHERE specialization_id = " + i;
 				pstmt = conn.prepareStatement(selectStatement);
@@ -55,10 +55,10 @@
 			selectStatement = "SELECT * FROM specializations";
 			pstmt = conn.prepareStatement(selectStatement);
 			rs = pstmt.executeQuery();
-			int i = 0;
+			int i = 1;
 			while (rs.next()) {
 			%>
-				<a href="applications.jsp?specialization=<%= rs.getString("specialization") %>"><%= rs.getString("specialization") %></a>
+				<a href="applications.jsp?specialization=<%= rs.getInt("s_id") %>"><%= rs.getString("specialization") %></a>
 				<%= array[i] %>
 				<br />
 			<%
