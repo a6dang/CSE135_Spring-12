@@ -8,7 +8,7 @@
 			
 			String lid = request.getParameter("lid");
 			
-			//theDegree.setLID(lid);
+			theDegree.setLID(lid);
 			
 			session.setAttribute("curDegree", theDegree);
 			

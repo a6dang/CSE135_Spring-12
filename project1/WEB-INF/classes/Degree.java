@@ -1,7 +1,7 @@
 package Degree;
 
 public class Degree{
-	private int lid; //location id of the degree obtained
+	private String lid; //location id of the degree obtained
 	private int uid; //university id of the degree obtained
 	private int did; //discipline id of the degree obtained
 	
@@ -11,7 +11,7 @@ public class Degree{
 	private String gradYear;
 	
 	public Degree(){
-		lid = -1;
+		lid = "";
 		uid = -1;
 		did = -1;
 		
@@ -21,11 +21,11 @@ public class Degree{
 		gradYear = "";
 	}
 	
-	public void setLID(int newLID){
+	public void setLID(String newLID){
 		this.lid = newLID;
 	}
 	
-	public int getLID(){
+	public String getLID(){
 		return this.lid;
 	}
 	
