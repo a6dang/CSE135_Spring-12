@@ -38,7 +38,11 @@
 			String nestedSelect = "";
 			String selectStatement = "";
 			
+			String nextUniversity = "";
+			String nextLocation = "";
+			
 			if (s_id != null){
+			
 				selectStatement = "SELECT * FROM students WHERE specialization_id=" + s_id;
 				pstmt = conn.prepareStatement(selectStatement);
 				rs = pstmt.executeQuery();
@@ -104,20 +108,20 @@
 							Degree <%= i + 1 %>
 							<br />
 						<%
+							// set the next location,university.
 							nestedSelect = "";
-							nestedSelect += "SELECT * FROM universities WHERE u_id =" + nested_rs.getInt("university_id");
+							nestedSelect += "SELECT country_state, university FROM universities WHERE u_id =" + nested_rs.getInt("university_id");
 							pstmt = conn.prepareStatement(nestedSelect);
-							nested_rs2 = pstmt.executeQuery(); 
+							nested_rs2 = pstmt.executeQuery();
+							
+							while(nested_rs2.next()){
+								nextLocation = nested_rs2.getString("country_state");
+								nextUniversity = nested_rs2.getString("university");
+							}
 						%> 
-							University: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("university") %> <% } %>
+							University: <%= nextUniversity %>
 							<br />
-						<%
-							nestedSelect = "";
-							nestedSelect += "SELECT * FROM countries WHERE c_id =" + nested_rs.getInt("location_id");
-							pstmt = conn.prepareStatement(nestedSelect);
-							nested_rs2 = pstmt.executeQuery(); 
-						%> 
-							Location: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("country") %> <% } %>
+							Location: <%= nextLocation %>
 							<br />
 						<%
 							nestedSelect = "";
@@ -209,19 +213,19 @@
 							Degree <%= i + 1 %>
 							<br />
 						<%
+							// set the next location,university.
 							nestedSelect = "";
-							nestedSelect += "SELECT * FROM universities WHERE u_id =" + nested_rs.getInt("university_id");
+							nestedSelect += "SELECT country_state, university FROM universities WHERE u_id =" + nested_rs.getInt("university_id");
 							pstmt = conn.prepareStatement(nestedSelect);
-							nested_rs2 = pstmt.executeQuery(); 
+							nested_rs2 = pstmt.executeQuery();
+							
+							while(nested_rs2.next()){
+								nextLocation = nested_rs2.getString("country_state");
+								nextUniversity = nested_rs2.getString("university");
+							}
 						%> 
 							University: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("university") %> <% } %>
 							<br />
-						<%
-							nestedSelect = "";
-							nestedSelect += "SELECT * FROM countries WHERE c_id =" + nested_rs.getInt("location_id");
-							pstmt = conn.prepareStatement(nestedSelect);
-							nested_rs2 = pstmt.executeQuery(); 
-						%> 
 							Location: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("country") %> <% } %>
 							<br />
 						<%

@@ -32,7 +32,6 @@
             Statement statement = conn.createStatement();
 
             // execute this update on our database, conn is our connection object
-			//pstmt = conn.prepareStatement("INSERT INTO students VALUES (3, 'tester')");
 			
 			String insertStatement = "";
 			
@@ -91,7 +90,6 @@
 			// change the insert statement so we can loop through all the degrees
 			// and add each one to the database.
 			Degree nextDegree = null;
-			Integer lid = null;
 			Integer uid = null;
 			Integer did = null;
 			Double gpa = null;
@@ -102,7 +100,6 @@
 			for (int i = 0; i < theStudent.numOfDegrees(); i++){
 				// first, lets save the variables per degree.
 				nextDegree = theStudent.getDegree(i);
-				lid = nextDegree.getLID();
 				uid = nextDegree.getUID();
 				did = nextDegree.getDID();
 				gpa = Double.parseDouble(nextDegree.getGPA());
@@ -111,9 +108,9 @@
 				gradYear = nextDegree.getGradYear();
 				
 				// then, lets insert this degree info into the db.
-				insertStatement = "INSERT INTO degrees (id,university_id,location_id,";
+				insertStatement = "INSERT INTO degrees (id,university_id,";
 				insertStatement += "discipline_id,gpa,degree_level,grad_month,grad_year) VALUES";
-				insertStatement += "("+ studentID +","+ uid +","+ lid +","+ did +","+ gpa +",'"+ degreeLevel +"',";
+				insertStatement += "("+ studentID +","+ uid +","+ did +","+ gpa +",'"+ degreeLevel +"',";
 				insertStatement += "'"+ gradMonth +"',"+ gradYear +")";
 				pstmt = conn.prepareStatement(insertStatement);
 				pstmt.executeUpdate();

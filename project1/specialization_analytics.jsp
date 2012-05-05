@@ -43,7 +43,7 @@
 			
 			for (int i = 0; i < count; i++){
 				// select count(specialization_id) from student where specialization_id = i
-				selectStatement = "SELECT COUNT(specialization_id) as count FROM students WHERE specialization_id = " + i;
+				selectStatement = "SELECT COUNT(specialization_id) as count FROM students WHERE specialization_id = " + (i + 1);
 				pstmt = conn.prepareStatement(selectStatement);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {

@@ -31,18 +31,83 @@
 		<table border="1">
 			<tr>
 				<td>
+				<%-- Import the java.sql package --%>
+				<%@ page import="java.sql.*"%>
+				<%-- -------- Open Connection Code -------- --%>
 				<%
-					support s = new support();
-					String path1 = config.getServletContext().getRealPath("countries.txt");
-					Vector countries = s.getCountries(path1);
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				
+				Vector<String> countries = new Vector<String>();
+				
+				try {
+					// Registering Postgresql JDBC driver with the DriverManager
+					Class.forName("org.postgresql.Driver");
+
+					// Open a connection to the database using DriverManager
+					conn = DriverManager.getConnection(
+							"jdbc:postgresql://localhost/cse135?" +
+							"user=postgres&password=password");
+				%>
 					
-					session.setAttribute("countries",countries);
+				<%-- -------- INSERT Statement Code -------- --%>
+				<%
+					// Create the statement
+					Statement statement = conn.createStatement();
+					
+					String selectStatement = "";
+					
+					selectStatement = "SELECT * FROM countries";
+					pstmt = conn.prepareStatement(selectStatement);
+					rs = pstmt.executeQuery();
+					
+					while(rs.next()){
+						countries.add(rs.getString("country"));
+					}
+				%>
+				<%-- -------- Close Connection Code -------- --%>
+				<%
+					// Close our connections
+
+					statement.close();
+
+					conn.close();
+				} catch (SQLException e) {
+					// in the event of a bad connection or invalid query syntax
+					throw new RuntimeException(e);
+				} finally {
+					// Release resources in a finally block in reverse-order of
+					// their creation
+					if (rs != null) {
+						try {
+							rs.close();
+						} catch (SQLException e) { } // Ignore
+						rs = null;
+					}
+					
+					if (pstmt != null) {
+						try {
+							pstmt.close();
+						} catch (SQLException e) { } // Ignore
+						pstmt = null;
+					}
+					if (conn != null) {
+						try {
+							conn.close();
+						} catch (SQLException e) { } // Ignore
+						conn = null;
+					}
+				}
+				%>
+				<%
+					//session.setAttribute("countries",countries);
 					
 					String nextCountry = "";
 					for (int i = 0; i < countries.size()/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i+1%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -54,7 +119,7 @@
 					for (int i = countries.size()/3; i < (countries.size()*2)/3; i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i+1%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
@@ -66,7 +131,7 @@
 					for (int i = (countries.size()*2)/3; i < countries.size(); i++){
 						nextCountry = (String) countries.elementAt(i);
 				%>
-					<a href="residence.jsp?cid=<%=i%>"><%= nextCountry %></a>
+					<a href="residence.jsp?cid=<%=i+1%>"><%= nextCountry %></a>
 					<br />
 					
 				<%
