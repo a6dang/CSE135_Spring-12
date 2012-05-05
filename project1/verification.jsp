@@ -13,7 +13,7 @@
 			
 			int sid = Integer.parseInt(request.getParameter("specialization"));
 			
-			theStudent.setSID(sid+1);
+			theStudent.setSID(sid);
 		%>
 	</head>
 	<body>
@@ -59,7 +59,7 @@
 			Degree curDegree = theStudent.getDegree(i);
 		%>
 			<br />
-			<b>Degree <%=i+1%></b>
+			<b>Degree <%=i + 1%></b>
 			<br />
 			<b>University:</b> <%= ((Vector) ((Vector) uniLocs.elementAt(curDegree.getLID())).elementAt(1)).elementAt(curDegree.getUID()) %>
 			<br />
@@ -78,7 +78,7 @@
 		%>
 		
 		
-		<b>Specialization:</b> <%= specs.get(theStudent.getSID()-1) %>
+		<b>Specialization:</b> <%= specs.get(theStudent.getSID()) %>
 		<br /><br />
 		
 		<!-- Submit and Cancel buttons -->

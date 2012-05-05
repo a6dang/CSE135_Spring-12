@@ -14,6 +14,8 @@
             
         Connection conn = null;
         PreparedStatement pstmt = null;
+		ResultSet rs = null; 
+		ResultSet nested_rs = null;
 		 
         try {
             // Registering Postgresql JDBC driver with the DriverManager
@@ -21,7 +23,7 @@
 
             // Open a connection to the database using DriverManager
 			conn = DriverManager.getConnection(
-					"jdbc:postgresql://localhost/postgres?" +
+					"jdbc:postgresql://localhost/cse135?" +
                     "user=postgres&password=password");
         %>
             
@@ -31,28 +33,21 @@
             Statement statement = conn.createStatement();
 			
 			// get the number of degrees
-			
-			
-			// get all the degrees, and the number of applicants per degree
-			String selectStatement = "SELECT COUNT(discipline_id) FROM degrees WHERE discipline_id = ";
-			pstmt = conn.prepareStatement(selectStatement);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-			%>
-				<a href="applications.jsp?discipline=<%= rs.getString("major") %>"><%= rs.getString("major") %></a>
-				<br />
-			<%
-			}
+
 
 			// get the student id
 			String selectStatement = "SELECT * FROM majors";
+			String nestedSelect = "";
 			pstmt = conn.prepareStatement(selectStatement);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
+				nestedSelect = "SELECT COUNT(id) as count FROM degrees WHERE discipline_id ="+rs.getInt("m_id");
+				pstmt = conn.prepareStatement(nestedSelect);
+				nested_rs = pstmt.executeQuery();
 			%>
-				<a href="applications.jsp?discipline=<%= rs.getString("major") %>"><%= rs.getString("major") %></a>
+				<a href="applications.jsp?discipline=<%= rs.getString("m_id") %>"><%= rs.getString("major") %></a>
+				<% while(nested_rs.next()){ %> <%= nested_rs.getInt("count") %> <% } %>
 				<br />
 			<%
 			}
@@ -71,7 +66,18 @@
         } finally {
             // Release resources in a finally block in reverse-order of
             // their creation
-
+			if (nested_rs != null) {
+                try {
+                    nested_rs.close();
+                } catch (SQLException e) { } // Ignore
+                nested_rs = null;
+            }
+			if (nested_rs != null) {
+                try {
+                    nested_rs.close();
+                } catch (SQLException e) { } // Ignore
+                nested_rs = null;
+            }
             if (pstmt != null) {
                 try {
                     pstmt.close();

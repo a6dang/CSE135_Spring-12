@@ -39,9 +39,9 @@
 				count = rs.getInt("count");
 			}
 			
-			int[] array = new int[count+1];
+			int[] array = new int[count];
 			
-			for (int i = 1; i <= count; i++){
+			for (int i = 0; i < count; i++){
 				// select count(specialization_id) from student where specialization_id = i
 				selectStatement = "SELECT COUNT(specialization_id) as count FROM students WHERE specialization_id = " + i;
 				pstmt = conn.prepareStatement(selectStatement);
@@ -55,7 +55,7 @@
 			selectStatement = "SELECT * FROM specializations";
 			pstmt = conn.prepareStatement(selectStatement);
 			rs = pstmt.executeQuery();
-			int i = 1;
+			int i = 0;
 			while (rs.next()) {
 			%>
 				<a href="applications.jsp?specialization=<%= rs.getInt("s_id") %>"><%= rs.getString("specialization") %></a>
