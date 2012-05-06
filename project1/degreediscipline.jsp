@@ -4,7 +4,9 @@
 		<title>Provide Degrees - Choose Discipline</title>
 		<%	
 			String university = request.getParameter("university");
+			String custom_university = request.getParameter("custom_university");
 			int uid = Integer.parseInt(request.getParameter("uid"));
+			String lid = request.getParameter("lid");
 			
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			Degree theDegree = (Degree) session.getAttribute("curDegree");
@@ -14,10 +16,6 @@
 			//Vector listUnis = (Vector) ((Vector) uniLocs.elementAt(theDegree.getLID())).elementAt(1);
 		
 			int numDegrees = theStudent.numOfDegrees();
-			
-			// add the university to the vector if it is a user-specified entry
-			//if(uid == listUnis.size())
-			//	listUnis.add(university);
 			
 			theDegree.setUID(uid);
 			
@@ -40,6 +38,8 @@
 		String countryOfCitizenship = "";
 		String countryOfResidence = "";
 		
+		String lastMajorID = "";
+		
 		try {
 			// Registering Postgresql JDBC driver with the DriverManager
 			Class.forName("org.postgresql.Driver");
@@ -55,6 +55,7 @@
 			Statement statement = conn.createStatement();
 			
 			String selectStatement = "";
+			String insertStatement = "";
 			
 			// set the country of citizenship.
 			selectStatement = "SELECT * FROM countries WHERE c_id =" + citizenshipID;
@@ -72,6 +73,32 @@
 			
 			while(rs.next()){
 				countryOfResidence = rs.getString("country");
+			}
+			
+			// add the university to the vector if it is a user-specified entry
+			if(custom_university != null){
+				selectStatement = "SELECT * FROM universities WHERE country_state = '" + lid + "' AND university = '" + custom_university + "'";
+				pstmt = conn.prepareStatement(selectStatement);
+				rs = pstmt.executeQuery();
+				int count = 0;
+				while(rs.next()){
+					count++;
+				}
+				
+				if(count == 0){
+					insertStatement = "INSERT INTO universities VALUES (" + uid + ",'" + lid + "','" + custom_university + "')";
+					pstmt = conn.prepareStatement(insertStatement);
+					pstmt.executeUpdate();
+				}
+			}
+			
+			// set last major ID
+			selectStatement = "SELECT MAX(m_id) as maxID FROM majors";
+			pstmt = conn.prepareStatement(selectStatement);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				lastMajorID = String.valueOf(rs.getInt("maxID"));
 			}
 			
 		%>
@@ -102,6 +129,8 @@
 				<option value="M.S.">M.S.</option>
 				<option value="P.H.D">P.H.D</option>
 			</select>
+			
+			<input type="hidden" name="nextMajorID" value="<%= (lastMajorID + 1) %>"/>
 			<input type="submit" value="Submit" />
 		</form>
 		<h3>Student Information:</h3>

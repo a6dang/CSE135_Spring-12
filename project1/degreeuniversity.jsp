@@ -45,6 +45,8 @@
 		String countryOfCitizenship = "";
 		String countryOfResidence = "";
 		
+		String lastUniversityID = "";
+		
 		try {
 			// Registering Postgresql JDBC driver with the DriverManager
 			Class.forName("org.postgresql.Driver");
@@ -87,6 +89,15 @@
 			while(rs.next()){
 				uniIndexes.add(rs.getInt("u_id"));
 				listUnis.add(rs.getString("university"));
+			}
+			
+			// set the universities vector.
+			selectStatement = "SELECT MAX(u_id) as maxID FROM universities";
+			pstmt = conn.prepareStatement(selectStatement);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				lastUniversityID = String.valueOf(rs.getInt("maxID"));
 			}
 		%>
 	
@@ -142,11 +153,11 @@
 			</tr>
 		</table>
 		<br />
-		
 		<!-- Other university not listed. -->
 		<form action="degreediscipline.jsp" method="POST">
-			Other University: <input type="text" name="university" />
-			<input type="hidden" name="uid" value="<%=listUnis.size()%>" />
+			Other University: <input type="text" name="custom_university" />
+			<input type="hidden" name="uid" value="<%= (lastUniversityID+1) %>" />
+			<input type="hidden" name="lid" value="<%= lid %>" />
 			<input type="submit" value="Submit" />
 		</form>	  
 		<h3>Student Information:</h3>

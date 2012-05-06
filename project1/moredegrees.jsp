@@ -19,34 +19,15 @@
 			String degreeLevel = request.getParameter("degLevel");
 			String gradMonth = request.getParameter("gradMonth");
 			String gradYear = request.getParameter("gradYear");
-
-			//if(did == -1){
-				//did = majors.size();
-				//String newMajor = request.getParameter("otherMajor");
-				//majors.add(newMajor);
-			//}
-			
-			theDegree.setDID(did);
-			theDegree.setGPA(gpa);
-			theDegree.setDegreeLevel(degreeLevel);
-			theDegree.setGradMonth(gradMonth);
-			theDegree.setGradYear(gradYear);
-			
-			theStudent.addDegree(theDegree);
-			
-			int numDegrees = theStudent.numOfDegrees();
-			
-			//Vector countries = (Vector) session.getAttribute("countries");
-			//Vector uniLocs = (Vector) session.getAttribute("uniLocs");
+			Integer nextMajorID = Integer.parseInt(request.getParameter("nextMajorID"));
 			
 			
 			int citizenshipID = theStudent.getCID();
 			int residenceID = theStudent.getRID();
 			
-		%>
-		
-		
-		<%@ page import="java.sql.*"%>
+			%>
+			
+			<%@ page import="java.sql.*"%>
 		<%-- -------- Open Connection Code -------- --%>
 		<%
 		Connection conn = null;
@@ -72,6 +53,7 @@
 			Statement statement = conn.createStatement();
 			
 			String selectStatement = "";
+			String insertStatement = "";
 			
 			// set the country of citizenship.
 			selectStatement = "SELECT * FROM countries WHERE c_id =" + citizenshipID;
@@ -92,6 +74,48 @@
 			}
 			
 		%>
+			
+			<%
+
+			if(did == -1){
+				did = nextMajorID;
+				String newMajor = request.getParameter("otherMajor");
+			
+				selectStatement = "SELECT * FROM majors WHERE major ='" + newMajor + "'";
+				pstmt = conn.prepareStatement(selectStatement);
+				rs = pstmt.executeQuery();
+				int count = 0;
+				while(rs.next()){
+					count++;
+				}
+				
+				if(count == 0){
+					insertStatement = "INSERT INTO majors VALUES (" + did + ",'" + newMajor + "')";
+					pstmt = conn.prepareStatement(insertStatement);
+					pstmt.executeUpdate();
+				}
+			}
+			
+			theDegree.setDID(did);
+			theDegree.setGPA(gpa);
+			theDegree.setDegreeLevel(degreeLevel);
+			theDegree.setGradMonth(gradMonth);
+			theDegree.setGradYear(gradYear);
+			
+			theStudent.addDegree(theDegree);
+			
+			int numDegrees = theStudent.numOfDegrees();
+			
+			//Vector countries = (Vector) session.getAttribute("countries");
+			//Vector uniLocs = (Vector) session.getAttribute("uniLocs");
+			
+			
+			
+			
+		%>
+		
+		
+		
 
 	
 	</head>

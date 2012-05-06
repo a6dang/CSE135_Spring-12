@@ -120,37 +120,6 @@
 				insertStatement += "'"+ gradMonth +"',"+ gradYear +")";
 				pstmt = conn.prepareStatement(insertStatement);
 				pstmt.executeUpdate();
-				
-				// lets also take care of any custom additions to the universities and discipline tables
-			
-				// first do the universities
-				//  must first check if the university exists in the database.
-				selectStatement = "SELECT * FROM universities WHERE u_id = " + uid;
-				pstmt = conn.prepareStatement(selectStatement);
-				ResultSet rs = pstmt.executeQuery();
-				nextUniversityID = -1;
-				while (rs.next()) {
-					nextUniversityID = rs.getInt("u_id");
-				}
-				if (nextUniversityID == -1){
-					// the next university doesn't exist in the database
-					//  lets get the country/state it should map to.
-					selectStatement = "SELECT DISTINCT country_state FROM universities WHERE country_state = " + lid;
-					pstmt = conn.prepareStatement(selectStatement);
-					ResultSet rs = pstmt.executeQuery();
-					while (rs.next()) {
-						nextUniversityLocation = rs.getInt("country_state");
-					}
-				
-					// this university does not yet exist in the database
-					//  lets add it to the database.
-					insertStatement = "INSERT INTO universities VALUES (" + uid + ",'" + nextUniversityLocation + "','" + + "'";
-					insertStatement += "discipline_id,gpa,degree_level,grad_month,grad_year) VALUES";
-					insertStatement += "("+ studentID +","+ uid +","+ did +","+ gpa +",'"+ degreeLevel +"',";
-					insertStatement += "'"+ gradMonth +"',"+ gradYear +")";
-					pstmt = conn.prepareStatement(insertStatement);
-					pstmt.executeUpdate();
-				}
 			}
 			
 
