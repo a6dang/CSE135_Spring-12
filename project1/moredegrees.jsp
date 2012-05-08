@@ -27,7 +27,7 @@
 			
 			%>
 			
-			<%@ page import="java.sql.*"%>
+		<%@ page import="java.sql.*"%>
 		<%-- -------- Open Connection Code -------- --%>
 		<%
 		Connection conn = null;
@@ -102,7 +102,9 @@
 			theDegree.setGradMonth(gradMonth);
 			theDegree.setGradYear(gradYear);
 			
-			theStudent.addDegree(theDegree);
+			if(!theStudent.containsDegree(theDegree)){
+				theStudent.addDegree(theDegree);
+			}
 			
 			int numDegrees = theStudent.numOfDegrees();
 			

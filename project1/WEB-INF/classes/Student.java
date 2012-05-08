@@ -174,4 +174,8 @@ public class Student{
 	public int numOfDegrees(){
 		return this.degrees.size();
 	}
+	
+	public boolean containsDegree(Degree degree){
+		return degrees.contains(degree);
+	}
 }

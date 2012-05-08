@@ -41,13 +41,18 @@
 			pstmt = conn.prepareStatement(selectStatement);
 			rs = pstmt.executeQuery();
 			
+			int disciplineCount = -1;
 			while (rs.next()) {
-				nestedSelect = "SELECT COUNT(id) as count FROM degrees WHERE discipline_id ="+rs.getInt("m_id");
+				nestedSelect = "SELECT DISTINCT id, discipline_id FROM degrees WHERE discipline_id ="+rs.getInt("m_id");
 				pstmt = conn.prepareStatement(nestedSelect);
 				nested_rs = pstmt.executeQuery();
+				disciplineCount = 0;
+				while(nested_rs.next()){
+					disciplineCount++;
+				}
 			%>
 				<a href="applications.jsp?discipline=<%= rs.getString("m_id") %>"><%= rs.getString("major") %></a>
-				<% while(nested_rs.next()){ %> <%= nested_rs.getInt("count") %> <% } %>
+				<%= disciplineCount %>
 				<br />
 			<%
 			}

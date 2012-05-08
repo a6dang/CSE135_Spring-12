@@ -15,7 +15,9 @@
         Connection conn = null;
         PreparedStatement pstmt = null;
         int studentID = -1;
-		 
+		
+		if(theStudent != null){
+		
         try {
             // Registering Postgresql JDBC driver with the DriverManager
             Class.forName("org.postgresql.Driver");
@@ -33,7 +35,6 @@
 
             // execute this update on our database, conn is our connection object
 			
-			String selectStatement
 			String insertStatement = "";
 			
 			int nextUniversityID = -1;
@@ -105,7 +106,6 @@
 			for (int i = 0; i < theStudent.numOfDegrees(); i++){
 				// first, lets save the variables per degree.
 				nextDegree = theStudent.getDegree(i);
-				lid = nextDegree.getLID();
 				uid = nextDegree.getUID();
 				did = nextDegree.getDID();
 				gpa = Double.parseDouble(nextDegree.getGPA());
@@ -132,6 +132,9 @@
             statement.close();
 
             conn.close();
+			
+			// do not allow multiple submissions
+			session.invalidate();
         } catch (SQLException e) {
             // in the event of a bad connection or invalid query syntax
             throw new RuntimeException(e);
@@ -152,11 +155,22 @@
                 conn = null;
             }
         }
+		
+		} // close if statement that checked if the student was null
         %>
 	</head>
 	<body>
 		<h1>Confirmation Page</h1>
-		YOUR STUDENT ID IS: <%= studentID %>
-		<!-- id of the person's entry in our db -->
+		<%
+			if(theStudent != null){
+		%>
+			YOUR STUDENT ID IS: <%= studentID %>
+		<%
+			} else {
+		%>
+			You are not allowed to make multiple submissions.
+		<%
+			}
+		%>
 	</body>
 </html>
