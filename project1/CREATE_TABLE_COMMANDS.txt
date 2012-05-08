@@ -1,0 +1,28 @@
+CREATE TABLE students
+(
+id SERIAL PRIMARY KEY,
+f_name text,
+m_initial text,
+l_name text,
+country_citizenship integer,
+country_residence integer,
+street_addr text,
+city text,
+state text,
+telephone_code integer,
+zip_code integer,
+area_code integer,
+phone_no text,
+specialization_id integer
+)
+
+CREATE TABLE degrees
+(
+id integer,
+university_id integer,
+discipline_id integer,
+gpa double precision,
+degree_level text,
+grad_month text,
+grad_year integer
+)

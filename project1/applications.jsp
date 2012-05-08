@@ -131,7 +131,7 @@
 						%> 
 							Discipline: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("major") %> <% } %>
 							<br />
-							GPA: <%= nested_rs.getInt("gpa") %>
+							GPA: <%= nested_rs.getDouble("gpa") %>
 							<br />
 							Degree Level: <%= nested_rs.getString("degree_level") %>
 							<br />
@@ -236,7 +236,7 @@
 						%> 
 							Discipline: <% while(nested_rs2.next()){ %> <%= nested_rs2.getString("major") %> <% } %>
 							<br />
-							GPA: <%= nested_rs.getInt("gpa") %>
+							GPA: <%= nested_rs.getDouble("gpa") %>
 							<br />
 							Degree Level: <%= nested_rs.getString("degree_level") %>
 							<br />

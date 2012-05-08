@@ -19,7 +19,7 @@
 			
 			theDegree.setUID(uid);
 			
-			Vector majors = (Vector) session.getAttribute("majors");
+			Vector<String> majors = new Vector<String>();//(Vector) session.getAttribute("majors");
 			
 			
 			int citizenshipID = theStudent.getCID();
@@ -38,7 +38,7 @@
 		String countryOfCitizenship = "";
 		String countryOfResidence = "";
 		
-		String lastMajorID = "";
+		int lastMajorID = -1;
 		
 		try {
 			// Registering Postgresql JDBC driver with the DriverManager
@@ -98,9 +98,18 @@
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()){
-				lastMajorID = String.valueOf(rs.getInt("maxID"));
+				//lastMajorID = String.valueOf(rs.getInt("maxID"));
+				lastMajorID = rs.getInt("maxID");
 			}
 			
+			// set the countries vector.
+			selectStatement = "SELECT major FROM majors ORDER by major";
+			pstmt = conn.prepareStatement(selectStatement);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()){
+				majors.add(rs.getString("major"));
+			}
 		%>
 	</head>
 	<body>

@@ -36,7 +36,7 @@
 
 
 			// get the student id
-			String selectStatement = "SELECT * FROM majors";
+			String selectStatement = "SELECT * FROM majors ORDER by major";
 			String nestedSelect = "";
 			pstmt = conn.prepareStatement(selectStatement);
 			rs = pstmt.executeQuery();
