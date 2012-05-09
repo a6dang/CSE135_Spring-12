@@ -50,6 +50,8 @@
 				%>
 					<b><%= rs.getString("f_name") %>&nbsp;<%= rs.getString("m_initial") %>&nbsp;<%= rs.getString("l_name") %></b>
 					<br />
+					Application ID: <%= rs.getInt("id") %>
+					<br />
 					<%
 						nestedSelect = "";
 						nestedSelect += "SELECT * FROM countries WHERE c_id =" + (rs.getInt("country_citizenship"));
@@ -155,6 +157,8 @@
 				%>
 					<b><%= rs.getString("f_name") %>&nbsp;<%= rs.getString("m_initial") %>&nbsp;<%= rs.getString("l_name") %></b>
 					<br />
+					Application ID: <%= rs.getInt("id") %>
+					<br/>
 					<%
 						nestedSelect = "";
 						nestedSelect += "SELECT * FROM countries WHERE c_id =" + (rs.getInt("country_citizenship"));

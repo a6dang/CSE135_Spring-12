@@ -57,11 +57,19 @@
 			rs = pstmt.executeQuery();
 			int i = 0;
 			while (rs.next()) {
+				if(array[i] > 0){
 			%>
-				<a href="applications.jsp?specialization=<%= rs.getInt("s_id") %>"><%= rs.getString("specialization") %></a>
-				<%= array[i] %>
+				<%= rs.getString("specialization") + " " %><a href="applications.jsp?specialization=<%= rs.getInt("s_id") %>"><%= array[i] %></a>
+				
 				<br />
 			<%
+				}
+				else{
+			%>
+				<%= rs.getString("specialization") + " " + array[i] %>
+				<br />
+			<%
+				}
 				i++;
 			}
 		%>

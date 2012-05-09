@@ -50,11 +50,19 @@
 				while(nested_rs.next()){
 					disciplineCount++;
 				}
+				if(disciplineCount > 0){ 
 			%>
-				<a href="applications.jsp?discipline=<%= rs.getString("m_id") %>"><%= rs.getString("major") %></a>
-				<%= disciplineCount %>
+				<%= rs.getString("major") %><a href="applications.jsp?discipline=<%= rs.getString("m_id") %>"> <%= disciplineCount %></a>
+				
 				<br />
 			<%
+				}
+				else{
+			%>
+					<%= rs.getString("major") + " " + disciplineCount %>
+					<br />
+			<%
+				}
 			}
 		%>
 			
