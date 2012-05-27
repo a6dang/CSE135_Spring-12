@@ -8,6 +8,27 @@
 			int uid = Integer.parseInt(request.getParameter("uid"));
 			String lid = request.getParameter("lid");
 			
+			if(custom_university != null){
+				ArrayList<String> custom_universities = (ArrayList<String>) session.getAttribute("custom_universities");
+				ArrayList<Integer> custom_uids = (ArrayList<Integer>) session.getAttribute("custom_uids");
+				ArrayList<String> custom_lids = (ArrayList<String>) session.getAttribute("custom_lids");
+				if(custom_universities == null){
+					custom_universities = new ArrayList<String>();
+					session.setAttribute("custom_universities",custom_universities);
+				}
+				if(custom_uids == null){
+					custom_uids = new ArrayList<Integer>();
+					session.setAttribute("custom_uids",custom_uids);
+				}
+				if(custom_lids == null){
+					custom_lids = new ArrayList<String>();
+					session.setAttribute("custom_lids",custom_lids);
+				}
+				custom_universities.add(custom_university);
+				custom_uids.add(uid);
+				custom_lids.add(lid);
+			}
+			
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			Degree theDegree = (Degree) session.getAttribute("curDegree");
 			
@@ -76,6 +97,7 @@
 			}
 			
 			// add the university to the vector if it is a user-specified entry
+			/*
 			if(custom_university != null){
 				selectStatement = "SELECT * FROM universities WHERE country_state = '" + lid + "' AND university = '" + custom_university + "'";
 				pstmt = conn.prepareStatement(selectStatement);
@@ -91,7 +113,7 @@
 					pstmt.executeUpdate();
 				}
 			}
-			
+			*/
 			// set last major ID
 			selectStatement = "SELECT MAX(m_id) as maxID FROM majors";
 			pstmt = conn.prepareStatement(selectStatement);

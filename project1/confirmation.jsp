@@ -6,6 +6,9 @@
 		</title>
 		<%
 		Student theStudent = (Student) session.getAttribute("theStudent");
+		ArrayList<String> custom_universities = (ArrayList<String>) session.getAttribute("custom_universities");
+		ArrayList<Integer> custom_uids = (ArrayList<Integer>) session.getAttribute("custom_uids");
+		ArrayList<String> custom_lids = (ArrayList<String>) session.getAttribute("custom_lids");
 		%>
 		<%-- Import the java.sql package --%>
         <%@ page import="java.sql.*"%>
@@ -14,6 +17,7 @@
             
         Connection conn = null;
         PreparedStatement pstmt = null;
+		ResultSet rs = null;
         int studentID = -1;
 		
 		if(theStudent != null){
@@ -87,7 +91,7 @@
 			// get the student id
 			String selectStatement = "SELECT MAX(id) as id FROM students";
 			pstmt = conn.prepareStatement(selectStatement);
-			ResultSet rs = pstmt.executeQuery();
+			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
 				studentID = rs.getInt("id");
@@ -122,6 +126,25 @@
 				pstmt.executeUpdate();
 			}
 			
+			/****************************************************************************************/
+			// Now to insert any custom universities or majors that this student entered in to our db.
+			int uniCount = -1;
+			if(custom_universities != null){
+				for(int i=0; i<custom_universities.size(); ++i){
+					insertStatement = "SELECT COUNT(*) as count FROM universities WHERE u_id='" + custom_uids.get(i) + "' AND country_state='" + custom_lids.get(i) + "' AND university='" + custom_universities.get(i) + "'";
+					pstmt = conn.prepareStatement(insertStatement);
+					rs = pstmt.executeQuery();
+					while (rs.next()) {
+						uniCount = rs.getInt("count");
+					}
+					if (uniCount <= 0){
+						insertStatement = "INSERT INTO universities VALUES (" + custom_uids.get(i) + ",'" + custom_lids.get(i) + "','" + custom_universities.get(i) + "')";
+						pstmt = conn.prepareStatement(insertStatement);
+						pstmt.executeUpdate();
+					}
+				}
+			}
+			/****************************************************************************************/
 
 		%>
 			
@@ -141,7 +164,12 @@
         } finally {
             // Release resources in a finally block in reverse-order of
             // their creation
-
+			if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) { } // Ignore
+                rs = null;
+            }
             if (pstmt != null) {
                 try {
                     pstmt.close();

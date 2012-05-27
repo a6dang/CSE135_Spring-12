@@ -2,6 +2,48 @@
 <html>
 	<head>
 		<title>Provide Degrees - Choose University</title>
+		<script type="text/javascript">
+			function checkUniversity() {
+				alert("TEST");
+				var xmlHttp;
+				try {
+					xmlHttp = new XMLHttpRequest();
+				} catch(e) {
+					try {
+						xmlHttp = new ActiveXObject("Msxml12.XMLHTTP");
+					} catch(e) {
+						try {
+							xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+						} catch(e) {
+							alert("Your browser does not support Ajax!")
+							return false;
+						}
+					}	
+				}
+				
+				var responseHandler = function() {
+					if(xmlHttp.readyState == 4){
+						var xmlDoc = xmlHttp.responseXML.documentElement;
+						var result = xmlDoc.getElementsByTagName("res")[0].childNodes[0].nodeValue;
+						if(result == "exists") {
+							alert("This university already exists in the db");
+							return false;
+						} else {
+							alert("it doesn't exist");
+							return true;
+						}
+					}
+				}
+				
+				xmlHttp.onreadystatechange = responseHandler;
+				
+				var url = "checkUniversity.jsp";
+				url = url + "?customUni=" + document.getElementById("customUni").value + "&lid=" + document.getElementById("lid").value;
+				
+				xmlHttp.open("GET",url,true);
+				xmlHttp.send(null);
+			}
+		</script>
 		<%	
 			Student theStudent = (Student) session.getAttribute("theStudent");
 			Degree theDegree = new Degree();
@@ -154,10 +196,10 @@
 		</table>
 		<br />
 		<!-- Other university not listed. -->
-		<form action="degreediscipline.jsp" method="POST">
-			Other University: <input type="text" name="custom_university" />
-			<input type="hidden" name="uid" value="<%= (lastUniversityID+1) %>" />
-			<input type="hidden" name="lid" value="<%= lid %>" />
+		<form action="degreediscipline.jsp" method="POST" onsubmit="return checkUniversity()">
+			Other University: <input type="text" name="custom_university" onblur="checkUniversity()" id="customUni"/>
+			<input type="hidden" name="uid" value="<%= (Integer.parseInt(lastUniversityID)+1) %>" />
+			<input type="hidden" name="lid" value="<%= lid %>" id="lid" />
 			<input type="submit" value="Submit" />
 		</form>	  
 		<h3>Student Information:</h3>
