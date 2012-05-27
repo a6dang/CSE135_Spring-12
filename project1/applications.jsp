@@ -4,6 +4,99 @@
 		<title>
 			Applications Page
 		</title>
+		<script type="text/javascript">
+			function showApplication(student_id) {
+				alert("TEST");
+				alert("student_id_" + student_id);
+				
+				var xmlHttp;
+				try {
+					xmlHttp = new XMLHttpRequest();
+				} catch(e) {
+					try {
+						xmlHttp = new ActiveXObject("Msxml12.XMLHTTP");
+					} catch(e) {
+						try {
+							xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+						} catch(e) {
+							alert("Your browser does not support Ajax!")
+							return false;
+						}
+					}	
+				}
+				
+				var responseHandler = function() {
+					if(xmlHttp.readyState == 4){
+						// Debug responseHandler
+						alert("Entering responseHandler");
+						
+						// Grab basic response (excluding degrees)
+						var xmlDoc = xmlHttp.responseXML.documentElement;
+						var response_student_id = xmlDoc.getElementsByTagName("student_id")[0].childNodes[0].nodeValue;
+						var first_name = xmlDoc.getElementsByTagName("first_name")[0].childNodes[0].nodeValue;
+						var m_initial = xmlDoc.getElementsByTagName("m_initial")[0].childNodes[0].nodeValue;
+						var last_name = xmlDoc.getElementsByTagName("last_name")[0].childNodes[0].nodeValue;
+						var country_citizenship = xmlDoc.getElementsByTagName("country_citizenship")[0].childNodes[0].nodeValue;
+						var country_residence = xmlDoc.getElementsByTagName("country_residence")[0].childNodes[0].nodeValue;
+						var street_addr = xmlDoc.getElementsByTagName("street_addr")[0].childNodes[0].nodeValue;
+						var city = xmlDoc.getElementsByTagName("city")[0].childNodes[0].nodeValue;
+						var which = xmlDoc.getElementsByTagName("which")[0].childNodes[0].nodeValue;
+						if (which == "state")
+							var state = xmlDoc.getElementsByTagName("state")[0].childNodes[0].nodeValue;
+						else
+							var telephone_code = xmlDoc.getElementsByTagName("telephone_code")[0].childNodes[0].nodeValue;
+						var zip_code = xmlDoc.getElementsByTagName("zip_code")[0].childNodes[0].nodeValue;
+						var area_code = xmlDoc.getElementsByTagName("area_code")[0].childNodes[0].nodeValue;
+						var phone_no = xmlDoc.getElementsByTagName("phone_no")[0].childNodes[0].nodeValue;
+						
+						// Debug response (excluding degrees)
+						alert("LETS PRINT OUT THE RESPONSE");
+						alert("response_student_id: " + response_student_id);
+						alert("first_name: " + first_name);
+						alert("m_initial: " + first_name);
+						alert("last_name: " + first_name);
+						alert("country_citizenship: " + country_citizenship);
+						alert("country_residence: " + country_residence);
+						alert("street_addr: " + street_addr);
+						alert("city: " + city);
+						alert("state: " + state);
+						alert("telephone_code: " + telephone_code);
+						alert("zip_code: " + zip_code);
+						alert("area_code: " + area_code);
+						alert("phone_no: " + phone_no);
+						
+						// Grab degrees response (using a loop)
+						
+						// Debug degrees response (using a loop)
+						x=xmlDoc.getElementsByTagName("degree")[0].childNodes;
+						for (i=0;i<x.length;i++)
+						{
+							alert(x.length);
+							alert(x.item(i).firstChild.data);
+						}
+						
+						/*var xmlDoc = xmlHttp.responseXML.documentElement;
+						var result = xmlDoc.getElementsByTagName("res")[0].childNodes[0].nodeValue;
+						if(result == "exists") {
+							alert("This university already exists in the db");
+							return false;
+						} else {
+							alert("it doesn't exist");
+							return true;
+						}
+						*/
+					}
+				}
+				
+				xmlHttp.onreadystatechange = responseHandler;
+				
+				var url = "getStudentInfo.jsp";
+				url = url + "?student_id=" + student_id;
+				alert("URL to send: " + url);
+				xmlHttp.open("GET",url,true);
+				xmlHttp.send(null);
+			}
+		</script>
 	</head>
 	<body>
 		<h1>Applications</h1>
@@ -264,6 +357,7 @@
 				while(rs.next()){
 				%>
 					<a href="applications_specific.jsp?student_id=<%= rs.getInt("id") %>"><%= rs.getString("f_name") %>&nbsp;<%= rs.getString("m_initial") %>&nbsp;<%= rs.getString("l_name") %></a>
+					<button type="button" id="student_id_<%= rs.getInt("id") %>" onclick="showApplication(<%= rs.getInt("id") %>)" >Show Application</button>
 					<br />
 				<%
 				}
