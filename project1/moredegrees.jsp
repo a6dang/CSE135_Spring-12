@@ -80,7 +80,24 @@
 			if(did == -1){
 				did = nextMajorID;
 				String newMajor = request.getParameter("otherMajor");
-			
+				
+				ArrayList<String> customMajors = (ArrayList<String>) session.getAttribute("customMajors");
+				ArrayList<Integer> customMajorIDs = (ArrayList<Integer>) session.getAttribute("customMajorIDs");
+				if(customMajors == null){
+					customMajors = new ArrayList<String>();
+					customMajorIDs = new ArrayList<Integer>();
+					session.setAttribute("customMajors",customMajors);
+					session.setAttribute("customMajorIDs",customMajorIDs);
+				}
+				
+				customMajors.add(newMajor);
+				if(customMajorIDs.size() == 0){
+					customMajorIDs.add(nextMajorID);
+				} else {
+					customMajorIDs.add((customMajorIDs.get(customMajorIDs.size()-1))+1);
+				}
+				
+				/*
 				selectStatement = "SELECT * FROM majors WHERE major ='" + newMajor + "'";
 				pstmt = conn.prepareStatement(selectStatement);
 				rs = pstmt.executeQuery();
@@ -94,6 +111,7 @@
 					pstmt = conn.prepareStatement(insertStatement);
 					pstmt.executeUpdate();
 				}
+				*/
 			}
 			
 			theDegree.setDID(did);

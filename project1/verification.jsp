@@ -15,6 +15,11 @@
 			
 			theStudent.setSID(sid);
 			
+			ArrayList<String> custom_universities = (ArrayList<String>) session.getAttribute("custom_universities");
+			ArrayList<Integer> custom_uids = (ArrayList<Integer>) session.getAttribute("custom_uids");
+			ArrayList<String> custom_lids = (ArrayList<String>) session.getAttribute("custom_lids");
+			ArrayList<String> customMajors = (ArrayList<String>) session.getAttribute("customMajors");
+			ArrayList<Integer> customMajorIDs = (ArrayList<Integer>) session.getAttribute("customMajorIDs");
 			
 			int citizenshipID = theStudent.getCID();
 			int residenceID = theStudent.getRID();
@@ -126,28 +131,65 @@
 			String nextUniversity = "";
 			String nextDiscipline = "";
 			
+			int index = -1;
+			
+			// for determining whether this is a custom field or not (if custom we pull from session)
+			int uniCount = -1;
+			int majorCount = -1;
+			
 			for(int i=0; i<numDegrees; i++){
 			Degree curDegree = theStudent.getDegree(i);
 			nextUID = curDegree.getUID();
 			nextDID = curDegree.getDID();
 			
-			// set the next location,university.
-			selectStatement = "SELECT country_state, university FROM universities WHERE u_id =" + nextUID;
+			// Check if this major is custom or not
+			selectStatement = "SELECT COUNT(*) as count FROM universities WHERE u_id =" + nextUID;
 			pstmt = conn.prepareStatement(selectStatement);
 			nested_rs = pstmt.executeQuery();
 			
 			while(nested_rs.next()){
-				nextLocation = nested_rs.getString("country_state");
-				nextUniversity = nested_rs.getString("university");
+				uniCount = nested_rs.getInt("count");
 			}
 			
-			// set the next discipline.
-			selectStatement = "SELECT major FROM majors WHERE m_id =" + nextDID;
+			// Check if this major is custom or not
+			selectStatement = "SELECT COUNT(*) as count FROM majors WHERE m_id =" + nextDID;
 			pstmt = conn.prepareStatement(selectStatement);
 			nested_rs = pstmt.executeQuery();
 			
 			while(nested_rs.next()){
-				nextDiscipline = nested_rs.getString("major");
+				majorCount = nested_rs.getInt("count");
+			}
+			
+			// set the next location,university.
+			if(uniCount > 0){
+				selectStatement = "SELECT country_state, university FROM universities WHERE u_id =" + nextUID;
+				pstmt = conn.prepareStatement(selectStatement);
+				nested_rs = pstmt.executeQuery();
+				
+				while(nested_rs.next()){
+					nextLocation = nested_rs.getString("country_state");
+					nextUniversity = nested_rs.getString("university");
+				}
+			}
+			else{
+				index = custom_uids.indexOf(nextUID);
+				nextLocation = custom_lids.get(index);
+				nextUniversity = custom_universities.get(index);
+			}
+			
+			if(majorCount > 0){
+				// set the next discipline.
+				selectStatement = "SELECT major FROM majors WHERE m_id =" + nextDID;
+				pstmt = conn.prepareStatement(selectStatement);
+				nested_rs = pstmt.executeQuery();
+				
+				while(nested_rs.next()){
+					nextDiscipline = nested_rs.getString("major");
+				}
+			}
+			else{
+				index = customMajorIDs.indexOf(nextDID);
+				nextDiscipline = customMajors.get(index);
 			}
 		%>
 			<br />

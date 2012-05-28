@@ -25,7 +25,11 @@
 					session.setAttribute("custom_lids",custom_lids);
 				}
 				custom_universities.add(custom_university);
-				custom_uids.add(uid);
+				if (custom_uids.size() == 0){
+					custom_uids.add(uid);
+				} else {
+					custom_uids.add((custom_uids.get(custom_uids.size()-1))+1);
+				}
 				custom_lids.add(lid);
 			}
 			
@@ -161,7 +165,7 @@
 				<option value="P.H.D">P.H.D</option>
 			</select>
 			
-			<input type="hidden" name="nextMajorID" value="<%= (lastMajorID + 1) %>"/>
+			<input type="hidden" name="nextMajorID" value="<%= lastMajorID + 1 %>"/>
 			<input type="submit" value="Submit" />
 		</form>
 		<h3>Student Information:</h3>

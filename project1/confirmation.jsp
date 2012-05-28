@@ -9,6 +9,8 @@
 		ArrayList<String> custom_universities = (ArrayList<String>) session.getAttribute("custom_universities");
 		ArrayList<Integer> custom_uids = (ArrayList<Integer>) session.getAttribute("custom_uids");
 		ArrayList<String> custom_lids = (ArrayList<String>) session.getAttribute("custom_lids");
+		ArrayList<String> customMajors = (ArrayList<String>) session.getAttribute("customMajors");
+		ArrayList<Integer> customMajorIDs = (ArrayList<Integer>) session.getAttribute("customMajorIDs");
 		%>
 		<%-- Import the java.sql package --%>
         <%@ page import="java.sql.*"%>
@@ -131,7 +133,7 @@
 			int uniCount = -1;
 			if(custom_universities != null){
 				for(int i=0; i<custom_universities.size(); ++i){
-					insertStatement = "SELECT COUNT(*) as count FROM universities WHERE u_id='" + custom_uids.get(i) + "' AND country_state='" + custom_lids.get(i) + "' AND university='" + custom_universities.get(i) + "'";
+					insertStatement = "SELECT COUNT(*) as count FROM universities WHERE country_state='" + custom_lids.get(i) + "' AND university='" + custom_universities.get(i) + "'";
 					pstmt = conn.prepareStatement(insertStatement);
 					rs = pstmt.executeQuery();
 					while (rs.next()) {
@@ -145,6 +147,22 @@
 				}
 			}
 			/****************************************************************************************/
+			int majorCount = -1;
+			if(customMajors != null){
+				for(int i=0; i<customMajors.size(); ++i){
+					insertStatement = "SELECT COUNT(*) as count FROM majors WHERE major='" + customMajors.get(i) + "'";
+					pstmt = conn.prepareStatement(insertStatement);
+					rs = pstmt.executeQuery();
+					while (rs.next()) {
+						majorCount = rs.getInt("count");
+					}
+					if (majorCount <= 0){
+						insertStatement = "INSERT INTO majors VALUES (" + customMajorIDs.get(i) + ",'" + customMajors.get(i) + "')";
+						pstmt = conn.prepareStatement(insertStatement);
+						pstmt.executeUpdate();
+					}
+				}
+			}
 
 		%>
 			
