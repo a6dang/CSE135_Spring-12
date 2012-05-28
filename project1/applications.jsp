@@ -6,9 +6,6 @@
 		</title>
 		<script type="text/javascript">
 			function showApplication(student_id) {
-				alert("TEST");
-				alert("student_id_" + student_id);
-				
 				var xmlHttp;
 				try {
 					xmlHttp = new XMLHttpRequest();
@@ -27,9 +24,6 @@
 				
 				var responseHandler = function() {
 					if(xmlHttp.readyState == 4){
-						// Debug responseHandler
-						alert("Entering responseHandler");
-						
 						// Grab basic response (excluding degrees)
 						var xmlDoc = xmlHttp.responseXML.documentElement;
 						var response_student_id = xmlDoc.getElementsByTagName("student_id")[0].childNodes[0].nodeValue;
@@ -49,8 +43,23 @@
 						var area_code = xmlDoc.getElementsByTagName("area_code")[0].childNodes[0].nodeValue;
 						var phone_no = xmlDoc.getElementsByTagName("phone_no")[0].childNodes[0].nodeValue;
 						
+						document.getElementById("first_name_" + student_id).innerHTML = first_name;
+						document.getElementById("m_initial_" + student_id).innerHTML = first_name;
+						document.getElementById("last_name_" + student_id).innerHTML = first_name;
+						document.getElementById("country_citizenship_" + student_id).innerHTML = first_name;
+						document.getElementById("country_residence_" + student_id).innerHTML = first_name;
+						document.getElementById("street_addr_" + student_id).innerHTML = first_name;
+						document.getElementById("city_" + student_id).innerHTML = first_name;
+						if (which == "state")
+							document.getElementById("state_" + student_id).innerHTML = first_name;
+						else
+							document.getElementById("telephone_code_" + student_id).innerHTML = first_name;
+						document.getElementById("zip_code_" + student_id).innerHTML = first_name;
+						document.getElementById("area_code_" + student_id).innerHTML = first_name;
+						document.getElementById("phone_no_" + student_id).innerHTML = first_name;
+						
 						// Debug response (excluding degrees)
-						alert("LETS PRINT OUT THE RESPONSE");
+						/*alert("LETS PRINT OUT THE RESPONSE");
 						alert("response_student_id: " + response_student_id);
 						alert("first_name: " + first_name);
 						alert("m_initial: " + first_name);
@@ -63,28 +72,40 @@
 						alert("telephone_code: " + telephone_code);
 						alert("zip_code: " + zip_code);
 						alert("area_code: " + area_code);
-						alert("phone_no: " + phone_no);
+						alert("phone_no: " + phone_no);*/
 						
-						// Grab degrees response (using a loop)
+						x=xmlDoc.getElementsByTagName("degree");
+
+						var degreeLabels=new Array("University: ","Location: ","Major: ","GPA: ","Degree Level: ","Grad Month: ","Grad Year: ");
 						
-						// Debug degrees response (using a loop)
-						x=xmlDoc.getElementsByTagName("degree")[0].childNodes;
 						for (i=0;i<x.length;i++)
 						{
-							alert(x.length);
-							alert(x.item(i).firstChild.data);
+							var divTag = document.createElement("div"); 
+ 
+							divTag.id = "degree_" + student_id + "_" + (i + 1); 
+							
+							divTag.innerHTML = "<br /><b>Degree " + (i + 1) + "</b><br />";
+				 
+							document.getElementById("info_" + student_id).appendChild(divTag); 
+
+							y=x[i].childNodes;
+							
+							for (j=1,k=0;j<y.length;j+=2,k++)
+							{
+								var spanTag = document.createElement("span"); 
+ 
+								spanTag.id = "span_" + student_id + "_" + (i + 1); 
+								
+								spanTag.innerHTML = degreeLabels[k] + y[j].textContent + "<br />";
+					 
+								document.getElementById("degree_" + student_id + "_" + (i + 1)).appendChild(spanTag); 
+								
+							}
 						}
-						
-						/*var xmlDoc = xmlHttp.responseXML.documentElement;
-						var result = xmlDoc.getElementsByTagName("res")[0].childNodes[0].nodeValue;
-						if(result == "exists") {
-							alert("This university already exists in the db");
-							return false;
-						} else {
-							alert("it doesn't exist");
-							return true;
-						}
-						*/
+						var info_id = "info_" + student_id;
+						document.getElementById(info_id).style.display = "block";
+						document.getElementById("student_id_" + student_id + "_show").style.display = "none";
+						document.getElementById("student_id_" + student_id + "_hide").style.display = "block";
 					}
 				}
 				
@@ -92,9 +113,25 @@
 				
 				var url = "getStudentInfo.jsp";
 				url = url + "?student_id=" + student_id;
-				alert("URL to send: " + url);
 				xmlHttp.open("GET",url,true);
 				xmlHttp.send(null);
+			}
+			
+			function hideApplication(student_id){
+				var studentInfo = document.getElementById("info_" + student_id);
+				
+				while (studentInfo.hasChildNodes()) {
+					var degreeInfo = studentInfo.lastChild;
+					if (degreeInfo.tagName != "SPAN"){
+						studentInfo.removeChild(degreeInfo);
+					} else {
+						break;
+					}
+				}
+				var info_id = "info_" + student_id;
+				document.getElementById(info_id).style.display = "none";
+				document.getElementById("student_id_" + student_id + "_show").style.display = "block";
+				document.getElementById("student_id_" + student_id + "_hide").style.display = "none";
 			}
 		</script>
 	</head>
@@ -235,11 +272,7 @@
 							<br />
 						<% 
 							i++;
-							
 						} 
-						%>
-				<%
-				
 				}
 			} // close the case that user came from specialization analytics page.
 			else if (m_id != null){ // the case that the user came from the discipline analytics page.
@@ -357,7 +390,35 @@
 				while(rs.next()){
 				%>
 					<a href="applications_specific.jsp?student_id=<%= rs.getInt("id") %>"><%= rs.getString("f_name") %>&nbsp;<%= rs.getString("m_initial") %>&nbsp;<%= rs.getString("l_name") %></a>
-					<button type="button" id="student_id_<%= rs.getInt("id") %>" onclick="showApplication(<%= rs.getInt("id") %>)" >Show Application</button>
+					<button type="button" id="student_id_<%= rs.getInt("id") %>_show" onclick="showApplication(<%= rs.getInt("id") %>)" style="display:block">Show Application</button>
+					<button type="button" id="student_id_<%= rs.getInt("id") %>_hide" onclick="hideApplication(<%= rs.getInt("id") %>)" style="display:none">Hide Application</button>
+					<br />
+					<div id="info_<%= rs.getInt("id") %>" style="display:none">
+						First Name: <span id="first_name_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Middle Init: <span id="m_initial_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Last Name: <span id="last_name_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Country of Citizenship: <span id="country_citizenship_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Country of Residence: <span id="country_residence_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Street Address: <span id="street_addr_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						City: <span id="city_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						State: <span id="state_<%= rs.getInt("id") %>">None</span>
+						<br />
+						Telephone Code: <span id="telephone_code_<%= rs.getInt("id") %>">None</span>
+						<br />
+						Zip Code: <span id="zip_code_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Area Code: <span id="area_code_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+						Phone Number: <span id="phone_no_<%= rs.getInt("id") %>"><%= rs.getInt("id") %></span>
+						<br />
+					</div>
 					<br />
 				<%
 				}
