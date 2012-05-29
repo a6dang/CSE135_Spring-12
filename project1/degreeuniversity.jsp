@@ -3,8 +3,8 @@
 	<head>
 		<title>Provide Degrees - Choose University</title>
 		<script type="text/javascript">
+			var exist = 0;
 			function checkUniversity() {
-				alert("TEST");
 				var xmlHttp;
 				try {
 					xmlHttp = new XMLHttpRequest();
@@ -26,11 +26,10 @@
 						var xmlDoc = xmlHttp.responseXML.documentElement;
 						var result = xmlDoc.getElementsByTagName("res")[0].childNodes[0].nodeValue;
 						if(result == "exists") {
-							alert("This university already exists in the db");
-							return false;
+							alert("This university already exists in the database. Please click on the hyperlink instead.");
+							exist = 1;
 						} else {
-							alert("it doesn't exist");
-							return true;
+							exist = 0;
 						}
 					}
 				}
@@ -42,6 +41,14 @@
 				
 				xmlHttp.open("GET",url,true);
 				xmlHttp.send(null);
+			}
+			function checkExist(){
+				if(exist == 1){
+					alert("This university already exists in the database. Please click on the hyperlink instead.");
+					return false;
+				}
+				else
+					return true;
 			}
 		</script>
 		<%	
@@ -196,7 +203,7 @@
 		</table>
 		<br />
 		<!-- Other university not listed. -->
-		<form action="degreediscipline.jsp" method="POST" onsubmit="return checkUniversity()">
+		<form action="degreediscipline.jsp" method="POST" onsubmit="return checkExist()">
 			Other University: <input type="text" name="custom_university" onblur="checkUniversity()" id="customUni"/>
 			<input type="hidden" name="uid" value="<%= (Integer.parseInt(lastUniversityID)+1) %>" />
 			<input type="hidden" name="lid" value="<%= lid %>" id="lid" />
