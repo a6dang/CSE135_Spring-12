@@ -274,21 +274,7 @@
 				nextDiscipline = nested_rs.getString("major");
 			}
 		%>
-			<br />
-			<b>Degree <%=i + 1%></b>
-			<br />
-			<b>University:</b> <%= nextUniversity %>
-			<br />
-			<b>Location:</b> <%= nextLocation %>
-			<br />
-			<b>Discipline:</b> <%= nextDiscipline %>
-			<br />
-			<b>GPA:</b> <%= curDegree.getGPA() %>
-			<br />
-			<b>Degree Level:</b> <%= curDegree.getDegreeLevel() %>
-			<br />
-			<b>Graduation Date:</b> <%= curDegree.getGradMonth() %> <%= curDegree.getGradYear() %>
-			<br /><br />
+
 		<% 
 			} 
 		%>
